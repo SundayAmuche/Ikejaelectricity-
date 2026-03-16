@@ -1,19 +1,72 @@
 Html
 Copy code
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>IkejaElectricity Pi App</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IkejaElectricity</title>
+
+<style>
+body{
+font-family: Arial, sans-serif;
+background:#f4f6f8;
+text-align:center;
+padding:50px;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+max-width:400px;
+margin:auto;
+}
+
+h1{
+color:#2c3e50;
+}
+
+p{
+font-size:18px;
+margin:20px 0;
+}
+
+button{
+background:#6c5ce7;
+color:white;
+padding:12px 25px;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#5a4bd6;
+}
+</style>
+
 </head>
 
 <body>
+
+<div class="container">
 
 <h1>Welcome to IkejaElectricity</h1>
 
 <p>Pay electricity bills using Pi Network.</p>
 
-<button>Connect Pi Wallet</button>
+<button onclick="connectPi()">Connect Pi Wallet</button>
+
+</div>
+
+<script>
+function connectPi(){
+alert("Pi wallet connection coming soon.");
+}
+</script>
 
 </body>
 </html>
