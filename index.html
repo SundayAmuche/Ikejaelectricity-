@@ -61,6 +61,22 @@ Copy code
 </div>
 
 <script>
+async function connectPi(){
+  try {
+    const scopes = ['username', 'payments'];
+
+    const auth = await window.Pi.authenticate(scopes, function(payment) {
+      console.log("Payment received", payment);
+    });
+
+    alert("Connected as: " + auth.user.username);
+
+  } catch (error) {
+    console.error(error);
+    alert("Connection failed");
+  }
+}
+</script>
 function connectPi(){
   alert("Pi wallet connection coming soon.");
 }
