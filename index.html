@@ -79,4 +79,26 @@ async function connectPi(){
 </script>
 
 </body>
-</html>
+Html
+Copy code
+<script src="https://cdn.minepi.com/pi-sdk/pi-sdk.js"></script>
+<script>
+  window.onload = async () => {
+    try {
+      await Pi.init({
+        appId: 'GB3H2...3IAEH',   // ← Use your full App ID from Pi Developer Portal
+        appName: 'IkejaElectricityApp',
+        sandbox: false             // false for live users
+      });
+
+      const connected = await Pi.connect();
+      if (connected) {
+        alert('Pi Wallet connected successfully!');
+      } else {
+        alert('Connection failed');
+      }
+    } catch (err) {
+      alert('Connection error: ' + err.message);
+    }
+  };
+</script>
