@@ -1,90 +1,44 @@
 Html
 Copy code
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      text-align: center;
-      padding: 50px;
-    }
-
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      margin: auto;
-    }
-
-    h1 {
-      color: #2c3e50;
-    }
-
-    p {
-      font-size: 18px;
-      margin: 20px 0;
-    }
-
-    button {
-      background: #6c5ce7;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #5a4bd6;
-    }
-  </style>
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 </head>
 
-<body>
+<body style="text-align:center; font-family: Arial; margin-top:50px;">
 
-  <div class="container">
-    <h1>Welcome to IkejaElectricity</h1>
-    <p>Pay electricity bills using Pi Network.</p>
-    <button onclick="connectWallet()">Connect Pi Wallet</button>
-  </div>
+  <h2>Welcome to IkejaElectricity</h2>
+  <p>Pay electricity bills using Pi Network.</p>
 
-  <!-- Correct Pi SDK -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <button onclick="connectPi()" style="padding:10px 20px; font-size:16px; background:purple; color:white; border:none; border-radius:5px;">
+    Connect Pi Wallet
+  </button>
+
   <script>
-    async function connectWallet() {
+    // Initialize Pi SDK (NO version error)
+    Pi.init({ sandbox: true });
+
+    async function connectPi() {
       try {
-        // Initialize Pi SDK with your App ID
-        await Pi.init({
-          appId: 'GB3H2AT6YKGZSMXZDHGRQEA3TMVOYDCCFSRRIF5RO7LWM3WJPRV3IAEH',
-          appName: 'IkejaElectricityApp',
-          sandbox: false           // false for live users
+        const scopes = ['username', 'payments'];
+
+        const auth = await Pi.authenticate(scopes, function(payment) {
+          console.log("Payment data:", payment);
         });
 
-        // Connect Pi Wallet
-        const connected = await Pi.connect();
-        if (connected) {
-          alert('Pi Wallet connected successfully!');
-        } else {
-          alert('Connection failed');
-        }
+        alert("Connected as: " + auth.user.username);
 
-      } catch (err) {
-        alert('Connection error: ' + err.message);
+      } catch (error) {
+        console.error(error);
+        alert("Connection failed");
       }
     }
   </script>
 
 </body>
-
 </html>
-          
