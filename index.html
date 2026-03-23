@@ -6,7 +6,6 @@ Copy code
   <meta charset="UTF-8">
   <title>IkejaElectricity</title>
 
-  <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 </head>
 
@@ -15,26 +14,30 @@ Copy code
   <h2>Welcome to IkejaElectricity</h2>
   <p>Pay electricity bills using Pi Network.</p>
 
-  <button onclick="connectPi()" style="padding:10px 20px; font-size:16px; background:purple; color:white; border:none; border-radius:5px;">
+  <button onclick="connectPi()" 
+    style="padding:10px 20px; font-size:16px; background:purple; color:white; border:none; border-radius:5px;">
     Connect Pi Wallet
   </button>
 
   <script>
-    // Initialize Pi SDK (NO version error)
-    Pi.init({ sandbox: true });
-
     async function connectPi() {
       try {
+        const Pi = window.Pi;
+
+        Pi.init({ sandbox: true });
+
         const scopes = ['username', 'payments'];
 
-        const auth = await Pi.authenticate(scopes, function(payment) {
-          console.log("Payment data:", payment);
-        });
+        function onIncompletePaymentFound(payment) {
+          console.log(payment);
+        }
+
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
 
         alert("Connected as: " + auth.user.username);
 
       } catch (error) {
-        console.error(error);
+        console.log(error);
         alert("Connection failed");
       }
     }
