@@ -1,1 +1,47 @@
+Html
+Copy code
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IkejaElectricity</title>
 
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+</head>
+
+<body style="text-align:center; font-family: Arial; margin-top:50px;">
+
+  <h2>Welcome to IkejaElectricity</h2>
+  <p>Pay electricity bills using Pi Network.</p>
+
+  <button onclick="connectPi()" 
+    style="padding:10px 20px; font-size:16px; background:purple; color:white; border:none; border-radius:5px;">
+    Connect Pi Wallet
+  </button>
+
+  <script>
+    async function connectPi() {
+      try {
+        const Pi = window.Pi;
+
+        Pi.init({ sandbox: true });
+
+        const scopes = ['username', 'payments'];
+
+        function onIncompletePaymentFound(payment) {
+          console.log(payment);
+        }
+
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+        alert("Connected as: " + auth.user.username);
+
+      } catch (error) {
+        console.log(error);
+        alert("Connection failed");
+      }
+    }
+  </script>
+
+</body>
+</html>
