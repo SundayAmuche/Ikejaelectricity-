@@ -1,3 +1,4 @@
+
 Html
 Copy code
 <!DOCTYPE html>
@@ -8,13 +9,25 @@ Copy code
   <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    body { 
+      font-family: Arial, sans-serif; 
+      text-align: center; 
+      padding: 50px; 
+      background-color: #f5f5f5;
+    }
+    h2 { color: #4b0082; }
+    p { font-size: 18px; margin-bottom: 30px; }
     button { 
-      background-color: purple; color: white; padding: 15px 30px; 
-      font-size: 18px; border: none; border-radius: 8px; cursor: pointer; 
+      background-color: purple; 
+      color: white; 
+      padding: 15px 40px; 
+      font-size: 18px; 
+      border: none; 
+      border-radius: 8px; 
+      cursor: pointer; 
     }
     button:disabled { background-color: gray; cursor: not-allowed; }
-    #status { margin-top: 20px; font-weight: bold; }
+    #status { margin-top: 20px; font-weight: bold; font-size: 16px; }
   </style>
 </head>
 <body>
@@ -23,26 +36,22 @@ Copy code
   <p>Pay electricity bills using Pi Network</p>
 
   <button id="connectBtn">Connect Pi Wallet</button>
-  <div id="status"></div>
+  <div id="status">Not connected</div>
 
   <script>
     const connectBtn = document.getElementById('connectBtn');
     const statusDiv = document.getElementById('status');
 
-    // Check if Pi object is available
+    // Check if Pi SDK is loaded
     if (!window.Pi) {
-      statusDiv.textContent = "Pi SDK not loaded or not in Pi Browser.";
+      statusDiv.textContent = "Pi SDK not loaded. Make sure you are in Pi Browser.";
       connectBtn.disabled = true;
     }
 
     async function connectPi() {
       try {
-        const userData = await Pi.connect({ 
-          // Optional: you can request user details here
-          // appName: "IkejaElectricity"
-        });
-
-        if (userData) {
+        const userData = await Pi.connect();
+        if (userData && userData.username) {
           statusDiv.textContent = `Connected as ${userData.username}`;
           connectBtn.disabled = true;
         } else {
