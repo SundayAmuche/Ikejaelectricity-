@@ -4,56 +4,58 @@ Copy code
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity</title>
   <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f2f2f2;
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    button { 
+      background-color: purple; color: white; padding: 15px 30px; 
+      font-size: 18px; border: none; border-radius: 8px; cursor: pointer; 
     }
-    h2 {
-      color: #4b0082;
-    }
-    button {
-      background-color: #4b0082;
-      color: white;
-      padding: 15px 25px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #6a0dad;
-    }
+    button:disabled { background-color: gray; cursor: not-allowed; }
+    #status { margin-top: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
+
   <h2>Welcome to IkejaElectricity</h2>
   <p>Pay electricity bills using Pi Network</p>
+
   <button id="connectBtn">Connect Pi Wallet</button>
-  <p><small>Your live app URL: <a href="https://loquacious-daifuku-810be2.netlify.app" target="_blank">Netlify Link</a></small></p>
+  <div id="status"></div>
 
   <script>
-    const connectBtn = document.getElementById("connectBtn");
+    const connectBtn = document.getElementById('connectBtn');
+    const statusDiv = document.getElementById('status');
 
-    connectBtn.addEventListener("click", async () => {
-      if (window.Pi) {
-        try {
-          await window.Pi.request({ method: "connect" });
-          alert("Pi Wallet Connected ✅");
-        } catch (err) {
-          alert("Connection failed ❌");
-          console.error(err);
+    // Check if Pi object is available
+    if (!window.Pi) {
+      statusDiv.textContent = "Pi SDK not loaded or not in Pi Browser.";
+      connectBtn.disabled = true;
+    }
+
+    async function connectPi() {
+      try {
+        const userData = await Pi.connect({ 
+          // Optional: you can request user details here
+          // appName: "IkejaElectricity"
+        });
+
+        if (userData) {
+          statusDiv.textContent = `Connected as ${userData.username}`;
+          connectBtn.disabled = true;
+        } else {
+          statusDiv.textContent = "Connection failed. Try again.";
         }
-      } else {
-        alert("Please open this link in Pi Browser ⚠️");
+      } catch (err) {
+        console.error(err);
+        statusDiv.textContent = "Connection failed. Make sure you are in Pi Browser.";
       }
-    });
+    }
+
+    connectBtn.addEventListener('click', connectPi);
   </script>
+
 </body>
 </html>
