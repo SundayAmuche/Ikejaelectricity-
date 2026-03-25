@@ -1,4 +1,4 @@
-Html id="fixpi001"
+Html
 Copy code
 <!DOCTYPE html>
 <html>
@@ -10,31 +10,37 @@ Copy code
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 </head>
 
-<body>
+<body style="text-align:center; font-family:Arial;">
+
   <h2>Welcome to IkejaElectricity</h2>
   <p>Pay electricity bills using Pi Network</p>
 
-  <button onclick="connectPi()">Connect Pi Wallet</button>
+  <button onclick="connectPi()" 
+          style="padding:15px; background-color:purple; color:white; border:none; border-radius:10px;">
+    Connect Pi Wallet
+  </button>
+
+  <p id="status"></p>
 
   <script>
-    // 🔥 THIS LINE WAS MISSING
-    Pi.init({ version: "2.0" });
-
     async function connectPi() {
       try {
-        const scopes = ['username'];
+        // Initialize Pi
+        Pi.init({ version: "2.0" });
 
-        const auth = await Pi.authenticate(scopes, function(payment) {
+        // Authenticate user
+        const auth = await Pi.authenticate(["username", "payments"], function(payment) {
           console.log(payment);
         });
 
-        alert("Connected as: " + auth.user.username);
+        document.getElementById("status").innerText = "Connected: " + auth.user.username;
 
       } catch (error) {
-        console.error(error);
-        alert("Connection failed");
+        document.getElementById("status").innerText = "Connection failed";
+        console.log(error);
       }
     }
   </script>
+
 </body>
 </html>
