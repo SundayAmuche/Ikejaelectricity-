@@ -1,46 +1,59 @@
 Html
 Copy code
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity</title>
-
   <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f2f2f2;
+    }
+    h2 {
+      color: #4b0082;
+    }
+    button {
+      background-color: #4b0082;
+      color: white;
+      padding: 15px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6a0dad;
+    }
+  </style>
 </head>
-
-<body style="text-align:center; font-family:Arial;">
-
+<body>
   <h2>Welcome to IkejaElectricity</h2>
   <p>Pay electricity bills using Pi Network</p>
-
-  <button onclick="connectPi()" 
-          style="padding:15px; background-color:purple; color:white; border:none; border-radius:10px;">
-    Connect Pi Wallet
-  </button>
-
-  <p id="status"></p>
+  <button id="connectBtn">Connect Pi Wallet</button>
+  <p><small>Your live app URL: <a href="https://loquacious-daifuku-810be2.netlify.app" target="_blank">Netlify Link</a></small></p>
 
   <script>
-    async function connectPi() {
-      try {
-        // Initialize Pi
-        Pi.init({ version: "2.0" });
+    const connectBtn = document.getElementById("connectBtn");
 
-        // Authenticate user
-        const auth = await Pi.authenticate(["username", "payments"], function(payment) {
-          console.log(payment);
-        });
-
-        document.getElementById("status").innerText = "Connected: " + auth.user.username;
-
-      } catch (error) {
-        document.getElementById("status").innerText = "Connection failed";
-        console.log(error);
+    connectBtn.addEventListener("click", async () => {
+      if (window.Pi) {
+        try {
+          await window.Pi.request({ method: "connect" });
+          alert("Pi Wallet Connected ✅");
+        } catch (err) {
+          alert("Connection failed ❌");
+          console.error(err);
+        }
+      } else {
+        alert("Please open this link in Pi Browser ⚠️");
       }
-    }
+    });
   </script>
-
 </body>
 </html>
