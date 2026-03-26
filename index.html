@@ -1,89 +1,44 @@
 Html
 Copy code
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>IkejaElectricity</title>
-
   <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f5f5f5;
-    }
-
-    h2 {
-      color: #4b0082;
-    }
-
-    button {
-      background-color: purple;
-      color: white;
-      padding: 15px 40px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      background-color: gray;
-      cursor: not-allowed;
-    }
-
-    #status {
-      margin-top: 20px;
-      font-weight: bold;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    button { background-color: #8A2BE2; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+    button:disabled { background-color: #ccc; cursor: not-allowed; }
   </style>
 </head>
-
 <body>
-
   <h2>Welcome to IkejaElectricity</h2>
   <p>Pay electricity bills using Pi Network</p>
-
-  <!-- REAL BUTTON -->
-  <button id="connectBtn">Connect Pi Wallet</button>
-
-  <div id="status">Not connected</div>
+  <button id="connectBtn" onclick="connectPi()">Connect Pi Wallet</button>
 
   <script>
-    const connectBtn = document.getElementById('connectBtn');
-    const statusDiv = document.getElementById('status');
-
-    // Check Pi SDK
-    if (!window.Pi) {
-      statusDiv.textContent = "Pi SDK not loaded. Open in Pi Browser.";
-      connectBtn.disabled = true;
-    }
-
-    // REAL FUNCTION
     async function connectPi() {
+      const btn = document.getElementById('connectBtn');
+      btn.disabled = true;
+      btn.textContent = 'Connecting...';
+
       try {
         const userData = await Pi.connect();
-
-        if (userData && userData.username) {
-          statusDiv.textContent = "Connected as " + userData.username;
-          connectBtn.disabled = true;
+        if (userData) {
+          btn.textContent = `Connected: ${userData.username}`;
         } else {
-          statusDiv.textContent = "Connection failed. Try again.";
+          btn.disabled = false;
+          btn.textContent = 'Connect Pi Wallet';
+          alert('Connection failed. Try again.');
         }
-
-      } catch (error) {
-        console.error(error);
-        statusDiv.textContent = "Connection failed. Make sure you are in Pi Browser.";
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Connect Pi Wallet';
+        alert('Error: ' + err.message);
       }
     }
-
-    // BUTTON CLICK
-    connectBtn.addEventListener("click", connectPi);
   </script>
-
 </body>
 </html>
