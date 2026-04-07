@@ -19,30 +19,36 @@ Copy code
   <button id="connectBtn" onclick="connectPi()">Connect Pi Wallet</button>
 
   <script>
-    const piWallet = new PiWallet({
-      appUrl: "https://ikejaelectricity-app.netlify.app/" // your Netlify URL
-    });
+    // Ensure Pi Wallet SDK is fully loaded before using it
+    window.addEventListener('load', () => {
+      const piWallet = new PiWallet({
+        appUrl: "https://ikejaelectricity-app.netlify.app/" // your Netlify URL
+      });
 
-    async function connectPi() {
-      const btn = document.getElementById('connectBtn');
-      btn.disabled = true;
-      btn.textContent = 'Connecting...';
+      async function connectPi() {
+        const btn = document.getElementById('connectBtn');
+        btn.disabled = true;
+        btn.textContent = 'Connecting...';
 
-      try {
-        const userData = await piWallet.request();
-        if (userData) {
-          btn.textContent = `Connected: ${userData.username}`;
-        } else {
+        try {
+          const userData = await piWallet.request();
+          if (userData) {
+            btn.textContent = `Connected: ${userData.username}`;
+          } else {
+            btn.disabled = false;
+            btn.textContent = 'Connect Pi Wallet';
+            alert('Connection failed. Try again.');
+          }
+        } catch (err) {
           btn.disabled = false;
           btn.textContent = 'Connect Pi Wallet';
-          alert('Connection failed. Try again.');
+          alert('Error: ' + err.message);
         }
-      } catch (err) {
-        btn.disabled = false;
-        btn.textContent = 'Connect Pi Wallet';
-        alert('Error: ' + err.message);
       }
-    }
+
+      // Make connectPi accessible to the button
+      window.connectPi = connectPi;
+    });
   </script>
 </body>
 </html>
