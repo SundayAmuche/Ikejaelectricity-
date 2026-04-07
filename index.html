@@ -1,54 +1,32 @@
 Html
 Copy code
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>IkejaElectricity</title>
-  <!-- Pi Wallet SDK -->
-  <script src="https://sandbox.minepi.com/pi.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-    button { background-color: #8A2BE2; color: white; padding: 15px 30px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
-    button:disabled { background-color: #ccc; cursor: not-allowed; }
-  </style>
-</head>
-<body>
-  <h2>Welcome to IkejaElectricity</h2>
-  <p>Pay electricity bills using Pi Network</p>
-  <button id="connectBtn" onclick="connectPi()">Connect Pi Wallet</button>
+<script src="https://sandbox.minepi.com/pi.js"></script>
 
-  <script>
-    // Ensure Pi Wallet SDK is fully loaded before using it
-    window.addEventListener('load', () => {
-      const piWallet = new PiWallet({
-        appUrl: "https://ikejaelectricity-app.netlify.app/" // your Netlify URL
-      });
+<script>
+  async function connectPi() {
+    const btn = document.getElementById('connectBtn');
+    btn.disabled = true;
+    btn.textContent = 'Connecting...';
 
-      async function connectPi() {
-        const btn = document.getElementById('connectBtn');
-        btn.disabled = true;
-        btn.textContent = 'Connecting...';
+    try {
+      // Initialize Pi SDK
+      Pi.init({ version: "2.0", sandbox: true });
 
-        try {
-          const userData = await piWallet.request();
-          if (userData) {
-            btn.textContent = `Connected: ${userData.username}`;
-          } else {
-            btn.disabled = false;
-            btn.textContent = 'Connect Pi Wallet';
-            alert('Connection failed. Try again.');
-          }
-        } catch (err) {
-          btn.disabled = false;
-          btn.textContent = 'Connect Pi Wallet';
-          alert('Error: ' + err.message);
-        }
+      // Request user connection
+      const user = await Pi.authenticate(['username']);
+
+      if (user) {
+        btn.textContent = "Connected: " + user.user.username;
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Connect Pi Wallet';
+        alert('Connection failed');
       }
 
-      // Make connectPi accessible to the button
-      window.connectPi = connectPi;
-    });
-  </script>
-</body>
-</html>
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Connect Pi Wallet';
+      alert('Error: ' + err.message);
+    }
+  }
+</script>
