@@ -1,4 +1,4 @@
-Html
+Html 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@ Html
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      background-color: #f9f9f9;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -17,26 +17,32 @@ Html
       height: 100vh;
       margin: 0;
     }
-    h1 {
+    h1, h2 {
       color: #333;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     button {
       padding: 12px 24px;
       font-size: 16px;
       color: white;
-      background-color: #007bff;
+      background-color: #28a745;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      margin-top: 10px;
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: #218838;
     }
     #status {
       margin-top: 20px;
       font-weight: bold;
+      color: #333;
+    }
+    .info {
+      margin-top: 15px;
+      font-size: 16px;
       color: #555;
     }
   </style>
@@ -45,24 +51,28 @@ Html
 
   <h1>Connect your Pi Wallet to continue</h1>
   <button id="connectBtn">Connect Pi Wallet</button>
-  <div id="status">Checking Pi Wallet...</div>
+  
+  <div id="status">Not connected</div>
+  
+  <h2 id="welcomeMsg" style="display:none;">Welcome to IkejaElectricity</h2>
+  <div class="info" id="userInfo" style="display:none;">
+    Username: <span id="username">JohnDoe</span><br>
+    Meter Number: <span id="meterNo">12345678</span>
+  </div>
 
   <script>
     const connectBtn = document.getElementById('connectBtn');
     const statusDiv = document.getElementById('status');
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const userInfo = document.getElementById('userInfo');
 
-    connectBtn.addEventListener('click', async () => {
-      statusDiv.textContent = 'Connecting...';
+    connectBtn.addEventListener('click', () => {
+      // Simulate wallet connection
+      statusDiv.textContent = 'Pi Wallet connected successfully!';
 
-      // Simulated Pi Wallet connection
-      setTimeout(() => {
-        const success = Math.random() > 0.2; // 80% chance of success
-        if (success) {
-          statusDiv.textContent = 'Pi Wallet connected successfully!';
-        } else {
-          statusDiv.textContent = 'Failed to connect Pi Wallet. Try again.';
-        }
-      }, 1500);
+      // Show welcome and user info
+      welcomeMsg.style.display = 'block';
+      userInfo.style.display = 'block';
     });
   </script>
 
