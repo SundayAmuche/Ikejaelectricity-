@@ -1,108 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f4f4 !important;
+      background-color: #f5f5f5;
       text-align: center;
+      padding: 50px;
     }
-
-    .box {
-      max-width: 400px;
-      margin: 60px auto;
-      background: #ffffff !important;
-      padding: 25px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
     h1 {
-      color: #4b00ff !important; /* Deep purple */
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      color: #222 !important;
-      font-size: 18px;
+      color: purple !important;
+      font-size: 2.5em;
       margin-bottom: 20px;
     }
-
-    h3 {
-      color: #555 !important;
-      margin-top: 20px;
-    }
-
-    button {
-      width: 80%;
-      padding: 12px;
-      margin: 10px auto;
-      border-radius: 6px;
-      border: none;
-      background: #4b00ff !important; /* Deep purple */
-      color: #fff !important;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      display: block;
-    }
-
-    button:active {
-      background: #3a00c2 !important;
-    }
-
-    input {
-      width: 80%;
-      padding: 10px;
-      margin: 10px auto;
-      border-radius: 6px;
-      border: 1px solid #ccc !important;
-      display: block;
-    }
-
-    #status {
-      display: none; /* Hidden until wallet connects */
-      color: #4b00ff !important;
-      font-weight: bold;
+    h2 {
+      color: purple !important;
+      font-size: 1.8em;
       margin-bottom: 15px;
     }
-
-    #form {
-      display: none; /* Hidden until wallet connects */
+    h3 {
+      color: purple !important;
+      font-size: 1.5em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 1.2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 250px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    input[type="submit"], button {
+      background-color: purple !important;
+      color: white !important;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    input[type="submit"]:hover, button:hover {
+      background-color: #5e0080 !important;
     }
   </style>
 </head>
 <body>
-
-  <div class="box">
-
-    <h1>WELCOME TO IKEJAELECTRICITY</h1>
-    <h2>Connect your Pi Wallet to continue</h2>
-
-    <button onclick="connect()">Connect Pi Wallet</button>
-
-    <p id="status">Pi Wallet connected successfully!</p>
-
-    <div id="form">
-      <h3>Enter your details</h3>
-      <input type="text" placeholder="Full Name">
-      <input type="text" placeholder="Meter Number">
-      <button>Submit / Pay</button>
-    </div>
-
-  </div>
-
-  <script>
-    function connect() {
-      document.getElementById("status").style.display = "block";
-      document.getElementById("form").style.display = "block";
-    }
-  </script>
-
+  <h1>WELCOME TO IKEJAELECTRICITY</h1>
+  <h2>Connect your Pi Wallet to continue</h2>
+  <button>Connect Pi Wallet</button>
+  <p>Pi Wallet connected successfully!</p>
+  <h3>Enter your details</h3>
+  <input type="text" placeholder="Name" />
+  <input type="text" placeholder="Meter Number" />
+  <br>
+  <input type="submit" value="Submit / Pay" />
 </body>
 </html>
