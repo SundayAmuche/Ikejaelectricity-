@@ -1,28 +1,56 @@
 Html
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IkejaElectricity - Connect Pi Wallet</title>
+  <title>IkejaElectricity App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
+
   <h1>IkejaElectricity App</h1>
-  
-  <!-- Real Connect Pi Wallet button -->
-  <button id="connectPi" style="padding:10px 20px; font-size:16px;">Connect Pi Wallet</button>
+  <p>Connect your Pi Wallet to continue</p>
+  <button id="connectWalletBtn">Connect Pi Wallet</button>
 
   <script>
-    // ==== REPLACE THESE WITH YOUR REAL PI DEVELOPER PORTAL VALUES ====
-    const clientId = "YOUR_CLIENT_ID_HERE"; // from Pi Developer Portal
-    const redirectUri = "YOUR_REDIRECT_URI_HERE"; // exact URL registered in portal
+    const connectBtn = document.getElementById('connectWalletBtn');
 
-    document.getElementById("connectPi").onclick = () => {
-      const authUrl = `https://wallet.minepi.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=pi`;
-      // Redirect user to Pi Wallet login
-      window.location.href = authUrl;
-    };
+    connectBtn.addEventListener('click', async () => {
+      if (window.Pi) {
+        try {
+          const userData = await window.Pi.request({ method: 'getUserData' });
+          alert('Wallet connected: ' + userData.username);
+        } catch (error) {
+          alert('Connection failed: ' + error.message);
+        }
+      } else {
+        alert('Pi Wallet not detected. Please open in Pi Browser.');
+      }
+    });
   </script>
+
 </body>
 </html>
