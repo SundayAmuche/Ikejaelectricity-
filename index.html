@@ -1,17 +1,24 @@
-Html
-
 <!DOCTYPE html>
 <html>
 <head>
   <title>IkejaElectricity</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f4f4 !important;
       text-align: center;
+    }
+
+    .box {
+      max-width: 400px;
+      margin: 60px auto;
+      background: #ffffff !important;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
     h1 {
@@ -26,53 +33,68 @@ Html
       margin-bottom: 20px;
     }
 
+    h3 {
+      color: #555 !important;
+      margin-top: 20px;
+    }
+
     button {
-      padding: 12px 20px;
+      width: 80%;
+      padding: 12px;
+      margin: 10px auto;
       border-radius: 6px;
+      border: none;
       background: #4b00ff !important; /* Deep purple */
       color: #fff !important;
+      font-size: 16px;
       font-weight: bold;
-      border: none;
       cursor: pointer;
-      margin: 10px 0;
+      display: block;
+    }
+
+    button:active {
+      background: #3a00c2 !important;
+    }
+
+    input {
       width: 80%;
+      padding: 10px;
+      margin: 10px auto;
+      border-radius: 6px;
+      border: 1px solid #ccc !important;
+      display: block;
     }
 
     #status {
-      color: #4b00ff !important; /* Purple instead of green */
+      display: none; /* Hidden until wallet connects */
+      color: #4b00ff !important;
       font-weight: bold;
-      display: none; /* Hidden until connect */
       margin-bottom: 15px;
     }
 
     #form {
-      display: none; /* Hidden until connect */
-    }
-
-    input {
-      padding: 10px;
-      width: 80%;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc !important;
+      display: none; /* Hidden until wallet connects */
     }
   </style>
 </head>
-
 <body>
 
-  <h1>WELCOME TO IKEJAELECTRICITY</h1>
-  <h2>Connect your Pi Wallet to continue</h2>
+  <div class="box">
 
-  <button onclick="connect()">Connect Pi Wallet</button>
+    <h1>WELCOME TO IKEJAELECTRICITY</h1>
+    <h2>Connect your Pi Wallet to continue</h2>
 
-  <p id="status">Pi Wallet connected successfully!</p>
+    <button onclick="connect()">Connect Pi Wallet</button>
 
-  <div id="form">
-    <h3>Enter your details</h3>
-    <input type="text" placeholder="Full Name"><br>
-    <input type="text" placeholder="Meter Number"><br>
-    <button>Submit / Pay</button>
+    <p id="status">Pi Wallet connected successfully!</p>
+
+    <div id="form">
+      <h3>Enter your details</h3>
+      <input type="text" placeholder="Full Name">
+      <input type="text" placeholder="Meter Number">
+      <button>Submit / Pay</button>
+    </div>
+
   </div>
 
   <script>
