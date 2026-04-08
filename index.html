@@ -1,29 +1,68 @@
 Html
+Copy code
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IkejaElectricity</title>
 
-<script>
-  // Initialize Pi SDK
-  Pi.init({ version: "2.0" });
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
-  async function connectPi() {
-    const btn = document.getElementById('connectBtn');
-    btn.disabled = true;
-    btn.textContent = 'Connecting...';
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      background-color: #8A2BE2;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
 
-    try {
-      const auth = await Pi.authenticate(['username', 'payments']);
+<body>
+  <h2>Welcome to IkejaElectricity</h2>
+  <p>Pay electricity bills using Pi Network</p>
 
-      if (auth && auth.user) {
-        btn.textContent = "Connected: " + auth.user.username;
-      } else {
+  <button id="connectBtn" onclick="connectPi()">Connect Pi Wallet</button>
+
+  <script>
+    // Initialize Pi SDK
+    Pi.init({ version: "2.0" });
+
+    async function connectPi() {
+      const btn = document.getElementById('connectBtn');
+      btn.disabled = true;
+      btn.textContent = 'Connecting...';
+
+      try {
+        const auth = await Pi.authenticate(['username', 'payments']);
+
+        if (auth && auth.user) {
+          btn.textContent = "Connected: " + auth.user.username;
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Connect Pi Wallet';
+          alert('Connection failed');
+        }
+
+      } catch (err) {
         btn.disabled = false;
         btn.textContent = 'Connect Pi Wallet';
-        alert('Connection failed');
+        alert('Error: ' + err.message);
       }
-
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = 'Connect Pi Wallet';
-      alert('Error: ' + err.message);
     }
-  }
-</script>
+  </script>
+</body>
+</html>
