@@ -1,15 +1,28 @@
 Html
 
-<button id="connectPi">Connect Pi Wallet</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IkejaElectricity - Connect Pi Wallet</title>
+</head>
+<body>
+  <h1>IkejaElectricity App</h1>
+  
+  <!-- Real Connect Pi Wallet button -->
+  <button id="connectPi" style="padding:10px 20px; font-size:16px;">Connect Pi Wallet</button>
 
-<script>
-  // Replace these with your Pi Developer Portal values
-  const clientId = "YOUR_CLIENT_ID_HERE";
-  const redirectUri = "YOUR_REDIRECT_URI_HERE"; // must exactly match portal
+  <script>
+    // ==== REPLACE THESE WITH YOUR REAL PI DEVELOPER PORTAL VALUES ====
+    const clientId = "YOUR_CLIENT_ID_HERE"; // from Pi Developer Portal
+    const redirectUri = "YOUR_REDIRECT_URI_HERE"; // exact URL registered in portal
 
-  document.getElementById("connectPi").onclick = () => {
-    const authUrl = `https://wallet.minepi.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=pi`;
-    // Redirect to Pi Wallet login
-    window.location.href = authUrl;
-  };
-</script>
+    document.getElementById("connectPi").onclick = () => {
+      const authUrl = `https://wallet.minepi.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=pi`;
+      // Redirect user to Pi Wallet login
+      window.location.href = authUrl;
+    };
+  </script>
+</body>
+</html>
