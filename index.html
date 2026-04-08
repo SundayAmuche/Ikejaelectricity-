@@ -1,128 +1,26 @@
 Html
-
 <!DOCTYPE html>
 <html>
-<head>
-  <title>IkejaElectricity App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f2f2f2;
-      padding: 20px;
-    }
+<body style="text-align:center; font-family:Arial;">
 
-    h1 {
-      color: #6a0dad;
-    }
+<h2 style="color:#6a0dad;">Connect your Pi Wallet to continue</h2>
 
-    input, select {
-      padding: 10px;
-      margin: 10px;
-      width: 80%;
-      max-width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+<button style="background:#6a0dad; color:white; padding:10px; border:none;"
+onclick="document.getElementById('status').innerHTML='Pi Wallet connected successfully!'">
+Connect Pi Wallet
+</button>
 
-    .form-box {
-      margin-top: 20px;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+<p id="status"></p>
 
-    button {
-      appearance: none;
-      -webkit-appearance: none;
-      background-color: #6a0dad !important;
-      color: white !important;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+<h3>Enter your details</h3>
 
-    .invoice-box {
-      margin-top: 20px;
-      text-align: left;
-      display: inline-block;
-      background-color: #f9f9f9;
-      padding: 15px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
-    }
+<input placeholder="Enter your name"><br><br>
+<input placeholder="Enter your meter number"><br><br>
+<input placeholder="Enter amount"><br><br>
 
-    .invoice-box h3 {
-      color: #6a0dad;
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Connect your Pi Wallet to continue</h1>
-  <button onclick="connectWallet()">Connect Pi Wallet</button>
-  <p id="status"></p>
-
-  <div class="form-box">
-    <h2>Enter your details</h2>
-
-    <input type="text" id="name" placeholder="Enter your name"><br>
-    <input type="text" id="meter" placeholder="Enter your meter number"><br>
-    <input type="email" id="email" placeholder="Enter your email (optional)"><br>
-    <input type="number" id="payment" placeholder="Enter amount to pay"><br>
-
-    <button onclick="submitDetails()">Submit / Pay</button>
-  </div>
-
-  <div class="invoice-box" id="invoice" style="display:none;">
-    <h3>Invoice Summary</h3>
-    <p id="inv-name"></p>
-    <p id="inv-meter"></p>
-    <p id="inv-email"></p>
-    <p id="inv-payment"></p>
-    <p id="inv-date"></p>
-    <p id="inv-id"></p>
-  </div>
-
-  <script>
-    function connectWallet() {
-      document.getElementById("status").innerHTML = "Pi Wallet connected successfully!";
-    }
-
-    function submitDetails() {
-      const name = document.getElementById("name").value;
-      const meter = document.getElementById("meter").value;
-      const email = document.getElementById("email").value;
-      const payment = document.getElementById("payment").value;
-
-      if(!name || !meter || !payment) {
-        alert("Please fill in your name, meter number, and payment amount.");
-        return;
-      }
-
-      const txnId = 'TXN-' + Math.floor(Math.random() * 1000000);
-      const now = new Date();
-      const date = now.toLocaleString();
-
-      document.getElementById("inv-name").innerHTML = `Name: ${name}`;
-      document.getElementById("inv-meter").innerHTML = `Meter Number: ${meter}`;
-      document.getElementById("inv-email").innerHTML = email ? `Email: ${email}` : '';
-      document.getElementById("inv-payment").innerHTML = `Amount Paid: ${payment}`;
-      document.getElementById("inv-date").innerHTML = `Date/Time: ${date}`;
-      document.getElementById("inv-id").innerHTML = `Transaction ID: ${txnId}`;
-
-      document.getElementById("invoice").style.display = 'block';
-
-      alert("Details submitted successfully!");
-    }
-  </script>
+<button style="background:#6a0dad; color:white; padding:10px; border:none;">
+Submit / Pay
+</button>
 
 </body>
 </html>
