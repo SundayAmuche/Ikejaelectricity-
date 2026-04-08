@@ -107,12 +107,10 @@ Html
         return;
       }
 
-      // Generate transaction ID
       const txnId = 'TXN-' + Math.floor(Math.random() * 1000000);
       const now = new Date();
       const date = now.toLocaleString();
 
-      // Display invoice
       document.getElementById("inv-name").innerHTML = `Name: ${name}`;
       document.getElementById("inv-meter").innerHTML = `Meter Number: ${meter}`;
       document.getElementById("inv-email").innerHTML = email ? `Email: ${email}` : '';
