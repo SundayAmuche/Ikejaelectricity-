@@ -1,77 +1,55 @@
-Html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>IkejaElectricity App</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background-color: #f2f2f2;
-    }
-
-    h2 {
-      color: #0a7cff;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: green;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      margin: 10px;
-      cursor: pointer;
-    }
-
-    input {
-      padding: 10px;
-      margin: 10px;
-      width: 80%;
-      max-width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .container {
-      background: white;
-      padding: 20px;
-      margin: 50px auto;
-      width: 90%;
-      max-width: 400px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <h2>Connect your Pi Wallet to continue</h2>
-
-  <button onclick="connectWallet()">Connect Pi Wallet</button>
-
-  <p id="status"></p>
-
-  <div id="formSection" style="display:none;">
-    <h3>Enter your details</h3>
-
-    <input type="text" placeholder="Full Name"><br>
-    <input type="text" placeholder="Meter Number"><br>
-
-    <button>Submit / Pay</button>
-  </div>
-
-</div>
-
-<script>
-  function connectWallet() {
-    document.getElementById("status").innerHTML = "Pi Wallet connected successfully!";
-    document.getElementById("formSection").style.display = "block";
+Html 
+<style>
+  body {
+    font-family: Arial;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
   }
-</script>
 
-</body>
-</html>
+  .container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    color: #222; /* Dark instead of blue */
+  }
+
+  h3 {
+    color: #444;
+  }
+
+  button {
+    padding: 12px;
+    margin: 10px;
+    width: 90%;
+    background-color: #6c4cff; /* Purple (Pi style) */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    background-color: #5a3ee6;
+  }
+
+  input {
+    padding: 10px;
+    margin: 8px;
+    width: 85%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  #status {
+    color: green;
+    font-weight: bold;
+  }
+</style>
