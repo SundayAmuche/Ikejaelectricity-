@@ -1,58 +1,78 @@
 Html
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity App</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background-color: #f4f6f8;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    h2 {
+      color: #34495e;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #walletStatus {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+
 </head>
-<body style="font-family: Arial; text-align: center; padding-top: 50px;">
+<body>
 
   <h1>Connect your Pi Wallet to continue</h1>
+
   <button onclick="connectWallet()">Connect Pi Wallet</button>
 
-  <p id="status">Not connected</p>
+  <p id="walletStatus"></p>
 
-  <!-- FORM -->
-  <div id="form" style="display:none;">
-    <h2>Enter your details</h2>
+  <h2>Enter your details</h2>
 
-    <input type="text" id="username" placeholder="Enter Username"><br><br>
-    <input type="text" id="meter" placeholder="Enter Meter Number"><br><br>
+  <input type="text" id="name" placeholder="Enter your name"><br><br>
 
-    <button onclick="submitDetails()">Submit</button>
-  </div>
+  <input type="text" id="meter" placeholder="Enter your meter number"><br><br>
 
-  <!-- RESULT -->
-  <div id="result" style="display:none;">
-    <h2>Welcome to IkejaElectricity</h2>
-    <p>Username: <span id="showName"></span></p>
-    <p>Meter Number: <span id="showMeter"></span></p>
-  </div>
+  <button onclick="submitDetails()">Submit</button>
 
   <script>
     function connectWallet() {
-      document.getElementById('status').innerText = 'Pi Wallet connected successfully!';
-      document.getElementById('form').style.display = 'block';
+      document.getElementById("walletStatus").innerText =
+        "Pi Wallet connected successfully!";
     }
 
     function submitDetails() {
-      const name = document.getElementById('username').value;
-      const meter = document.getElementById('meter').value;
+      let name = document.getElementById("name").value;
+      let meter = document.getElementById("meter").value;
 
-      if (!name || !meter) {
-        alert('Please fill all fields');
-        return;
-      }
-
-      document.getElementById('showName').innerText = name;
-      document.getElementById('showMeter').innerText = meter;
-
-      document.getElementById('form').style.display = 'none';
-      document.getElementById('result').style.display = 'block';
+      alert("Name: " + name + "\nMeter Number: " + meter);
     }
   </script>
 
 </body>
-</html
+</html>
