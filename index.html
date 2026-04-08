@@ -4,45 +4,44 @@ Html
 <html>
 <head>
   <title>IkejaElectricity App</title>
-
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       text-align: center;
-      background-color: #f4f6f8;
+      background-color: #f2f2f2;
+      padding: 20px;
     }
 
     h1 {
-      color: #2c3e50;
-    }
-
-    h2 {
-      color: #34495e;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 10px;
-      cursor: pointer;
-      border-radius: 5px;
+      color: #6a0dad;
     }
 
     input {
       padding: 10px;
-      width: 250px;
-      border-radius: 5px;
+      margin: 10px;
+      width: 80%;
+      max-width: 300px;
       border: 1px solid #ccc;
+      border-radius: 5px;
     }
 
-    #walletStatus {
-      color: green;
-      font-weight: bold;
+    .form-box {
+      margin-top: 20px;
+    }
+
+    button {
+      appearance: none;           /* Remove default browser/Pi styling */
+      -webkit-appearance: none;   /* Remove iOS/Android default styling */
+      background-color: #6a0dad !important; /* Force purple */
+      color: white !important;    /* Force white text */
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
     }
   </style>
-
 </head>
 <body>
 
@@ -50,27 +49,30 @@ Html
 
   <button onclick="connectWallet()">Connect Pi Wallet</button>
 
-  <p id="walletStatus"></p>
+  <p id="status"></p>
 
-  <h2>Enter your details</h2>
+  <div class="form-box">
+    <h2>Enter your details</h2>
 
-  <input type="text" id="name" placeholder="Enter your name"><br><br>
+    <input type="text" id="name" placeholder="Enter your name"><br>
+    <input type="text" id="meter" placeholder="Enter your meter number"><br>
 
-  <input type="text" id="meter" placeholder="Enter your meter number"><br><br>
-
-  <button onclick="submitDetails()">Submit</button>
+    <button onclick="submitDetails()">Submit</button>
+  </div>
 
   <script>
     function connectWallet() {
-      document.getElementById("walletStatus").innerText =
-        "Pi Wallet connected successfully!";
+      document.getElementById("status").innerHTML = "Pi Wallet connected successfully!";
     }
 
     function submitDetails() {
-      let name = document.getElementById("name").value;
-      let meter = document.getElementById("meter").value;
-
-      alert("Name: " + name + "\nMeter Number: " + meter);
+      const name = document.getElementById("name").value;
+      const meter = document.getElementById("meter").value;
+      if(name && meter){
+        alert(`Name: ${name}\nMeter Number: ${meter}\nDetails submitted successfully!`);
+      } else {
+        alert("Please enter both name and meter number.");
+      }
     }
   </script>
 
