@@ -1,15 +1,11 @@
 Html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IkejaElectricity App</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        #connectButton { padding: 10px 20px; font-size: 18px; cursor: pointer; }
-        #status { margin-top: 20px; font-weight: bold; }
-    </style>
 </head>
 <body>
     <h1>IkejaElectricity App</h1>
@@ -18,7 +14,6 @@ Html
     <div id="status">Checking Pi Wallet...</div>
 
     <script>
-        // Wait until Pi object is available
         const status = document.getElementById('status');
         const button = document.getElementById('connectButton');
 
@@ -41,7 +36,6 @@ Html
             }
         }
 
-        // Retry detection every 500ms until Pi object is ready
         const interval = setInterval(() => {
             if (window.Pi) {
                 clearInterval(interval);
