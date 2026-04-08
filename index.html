@@ -3,37 +3,68 @@ Html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IkejaElectricity App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IkejaElectricity App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #status {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <h1>IkejaElectricity App</h1>
-    <p>Connect your Pi Wallet to continue</p>
-    <button id="connectButton" disabled>Connect Pi Wallet</button>
-    <div id="status">Checking Pi Wallet...</div>
 
-    <script>
-        const status = document.getElementById('status');
-        const button = document.getElementById('connectButton');
+  <h1>Connect your Pi Wallet to continue</h1>
+  <button id="connectBtn">Connect Pi Wallet</button>
+  <div id="status">Checking Pi Wallet...</div>
 
-        const interval = setInterval(() => {
-            if (window.Pi && window.Pi.getUserAccount) {
-                clearInterval(interval);
-                status.textContent = "Pi Wallet detected!";
-                button.disabled = false;
+  <script>
+    const connectBtn = document.getElementById('connectBtn');
+    const statusDiv = document.getElementById('status');
 
-                button.addEventListener('click', async () => {
-                    try {
-                        const account = await window.Pi.getUserAccount();
-                        status.textContent = `Wallet connected: ${account.address}`;
-                    } catch (err) {
-                        status.textContent = "Connection failed. Try again.";
-                        console.error(err);
-                    }
-                });
-            }
-        }, 500);
-    </script>
+    connectBtn.addEventListener('click', async () => {
+      statusDiv.textContent = 'Connecting...';
+
+      // Simulated Pi Wallet connection
+      setTimeout(() => {
+        const success = Math.random() > 0.2; // 80% chance of success
+        if (success) {
+          statusDiv.textContent = 'Pi Wallet connected successfully!';
+        } else {
+          statusDiv.textContent = 'Failed to connect Pi Wallet. Try again.';
+        }
+      }, 1500);
+    });
+  </script>
+
 </body>
 </html>
