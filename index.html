@@ -9,41 +9,42 @@ Html
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f4f4f4;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
     h1, h2 {
       color: #333;
-      margin-bottom: 10px;
     }
     button {
-      padding: 12px 24px;
+      padding: 10px 20px;
+      margin-top: 10px;
       font-size: 16px;
-      color: white;
+      color: #fff;
       background-color: #28a745;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 10px;
     }
     button:hover {
       background-color: #218838;
     }
-    #status {
-      margin-top: 20px;
-      font-weight: bold;
-      color: #333;
-    }
-    .info {
-      margin-top: 15px;
+    input {
+      padding: 10px;
+      margin: 8px 0;
+      width: 250px;
       font-size: 16px;
-      color: #555;
+    }
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    #formSection, #resultSection {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
     }
   </style>
 </head>
@@ -51,28 +52,57 @@ Html
 
   <h1>Connect your Pi Wallet to continue</h1>
   <button id="connectBtn">Connect Pi Wallet</button>
-  
   <div id="status">Not connected</div>
-  
-  <h2 id="welcomeMsg" style="display:none;">Welcome to IkejaElectricity</h2>
-  <div class="info" id="userInfo" style="display:none;">
-    Username: <span id="username">JohnDoe</span><br>
-    Meter Number: <span id="meterNo">12345678</span>
+
+  <!-- User Input Form -->
+  <div id="formSection">
+    <h2>Enter your details</h2>
+    <input type="text" id="usernameInput" placeholder="Enter Username"><br>
+    <input type="text" id="meterInput" placeholder="Enter Meter Number"><br>
+    <button id="submitBtn">Submit</button>
+  </div>
+
+  <!-- Display Result -->
+  <div id="resultSection">
+    <h2>Welcome to IkejaElectricity</h2>
+    <p>Username: <span id="displayName"></span></p>
+    <p>Meter Number: <span id="displayMeter"></span></p>
   </div>
 
   <script>
     const connectBtn = document.getElementById('connectBtn');
     const statusDiv = document.getElementById('status');
-    const welcomeMsg = document.getElementById('welcomeMsg');
-    const userInfo = document.getElementById('userInfo');
+    const formSection = document.getElementById('formSection');
+    const resultSection = document.getElementById('resultSection');
 
+    const submitBtn = document.getElementById('submitBtn');
+    const usernameInput = document.getElementById('usernameInput');
+    const meterInput = document.getElementById('meterInput');
+
+    const displayName = document.getElementById('displayName');
+    const displayMeter = document.getElementById('displayMeter');
+
+    // Step 1: Connect Wallet
     connectBtn.addEventListener('click', () => {
-      // Simulate wallet connection
       statusDiv.textContent = 'Pi Wallet connected successfully!';
+      formSection.style.display = 'block';
+    });
 
-      // Show welcome and user info
-      welcomeMsg.style.display = 'block';
-      userInfo.style.display = 'block';
+    // Step 2: Submit User Details
+    submitBtn.addEventListener('click', () => {
+      const username = usernameInput.value.trim();
+      const meter = meterInput.value.trim();
+
+      if (username === '' || meter === '') {
+        alert('Please enter both Username and Meter Number');
+        return;
+      }
+
+      displayName.textContent = username;
+      displayMeter.textContent = meter;
+
+      formSection.style.display = 'none';
+      resultSection.style.display = 'block';
     });
   </script>
 
