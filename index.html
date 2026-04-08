@@ -17,8 +17,9 @@ Html
         const status = document.getElementById('status');
         const button = document.getElementById('connectButton');
 
-        function detectPiWallet() {
+        const interval = setInterval(() => {
             if (window.Pi && window.Pi.getUserAccount) {
+                clearInterval(interval);
                 status.textContent = "Pi Wallet detected!";
                 button.disabled = false;
 
@@ -31,15 +32,6 @@ Html
                         console.error(err);
                     }
                 });
-            } else {
-                status.textContent = "Pi Wallet not detected. Make sure you're in Pi Browser.";
-            }
-        }
-
-        const interval = setInterval(() => {
-            if (window.Pi) {
-                clearInterval(interval);
-                detectPiWallet();
             }
         }, 500);
     </script>
