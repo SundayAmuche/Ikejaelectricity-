@@ -1,26 +1,77 @@
 Html
 <!DOCTYPE html>
 <html>
-<body style="text-align:center; font-family:Arial;">
+<head>
+  <title>IkejaElectricity App</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background-color: #f2f2f2;
+    }
 
-<h2 style="color:#6a0dad;">Connect your Pi Wallet to continue</h2>
+    h2 {
+      color: #0a7cff;
+    }
 
-<button style="background:#6a0dad; color:white; padding:10px; border:none;"
-onclick="document.getElementById('status').innerHTML='Pi Wallet connected successfully!'">
-Connect Pi Wallet
-</button>
+    button {
+      padding: 10px 20px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+    }
 
-<p id="status"></p>
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-<h3>Enter your details</h3>
+    .container {
+      background: white;
+      padding: 20px;
+      margin: 50px auto;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
 
-<input placeholder="Enter your name"><br><br>
-<input placeholder="Enter your meter number"><br><br>
-<input placeholder="Enter amount"><br><br>
+<body>
 
-<button style="background:#6a0dad; color:white; padding:10px; border:none;">
-Submit / Pay
-</button>
+<div class="container">
+
+  <h2>Connect your Pi Wallet to continue</h2>
+
+  <button onclick="connectWallet()">Connect Pi Wallet</button>
+
+  <p id="status"></p>
+
+  <div id="formSection" style="display:none;">
+    <h3>Enter your details</h3>
+
+    <input type="text" placeholder="Full Name"><br>
+    <input type="text" placeholder="Meter Number"><br>
+
+    <button>Submit / Pay</button>
+  </div>
+
+</div>
+
+<script>
+  function connectWallet() {
+    document.getElementById("status").innerHTML = "Pi Wallet connected successfully!";
+    document.getElementById("formSection").style.display = "block";
+  }
+</script>
 
 </body>
 </html>
