@@ -1,110 +1,18 @@
 Html 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>IkejaElectricity</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<h1 style="color:#5f2eea;">WELCOME TO IKEJAELECTRICITY</h1>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-    }
+<h2 style="color:#222;">Connect your Pi Wallet to continue</h2>
 
-    .box {
-      max-width: 400px;
-      margin: 60px auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+<button style="background:#5f2eea;color:white;padding:10px;border:none;border-radius:5px;">
+  Connect Pi Wallet
+</button>
 
-    h1 {
-      font-size: 22px;
-      color: #5f2eea; /* Strong purple */
-      margin-bottom: 10px;
-    }
+<p style="color:green;font-weight:bold;">
+  Pi Wallet connected successfully!
+</p>
 
-    h2 {
-      font-size: 16px;
-      color: #222;
-      margin-bottom: 20px;
-    }
+<h3>Enter your details</h3>
 
-    h3 {
-      color: #555;
-      margin-top: 20px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 6px;
-      background: #5f2eea; /* Real purple */
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:active {
-      background: #4b23c4;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    #status {
-      margin-top: 10px;
-      color: green;
-      font-weight: bold;
-    }
-
-    #form {
-      display: none;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="box">
-
-  <h1>WELCOME TO IKEJAELECTRICITY</h1>
-
-  <h2>Connect your Pi Wallet to continue</h2>
-
-  <button onclick="connect()">Connect Pi Wallet</button>
-
-  <div id="status"></div>
-
-  <div id="form">
-    <h3>Enter your details</h3>
-
-    <input type="text" placeholder="Full Name">
-    <input type="text" placeholder="Meter Number">
-
-    <button>Submit / Pay</button>
-  </div>
-
-</div>
-
-<script>
-  function connect() {
-    document.getElementById("status").innerHTML = "Pi Wallet connected successfully!";
-    document.getElementById("form").style.display = "block";
-  }
-</script>
-
-</body>
-</html>
+<button style="background:#5f2eea;color:white;padding:10px;border:none;border-radius:5px;">
+  Submit / Pay
+</button>
