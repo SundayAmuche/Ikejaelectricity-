@@ -1,4 +1,4 @@
-Html 
+Html
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,105 +6,53 @@ Html
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-    h1, h2 {
-      color: #333;
-    }
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      font-size: 16px;
-      color: #fff;
-      background-color: #28a745;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #218838;
-    }
-    input {
-      padding: 10px;
-      margin: 8px 0;
-      width: 250px;
-      font-size: 16px;
-    }
-    #status {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    #formSection, #resultSection {
-      display: none;
-      margin-top: 20px;
-      text-align: center;
-    }
-  </style>
 </head>
-<body>
+<body style="font-family: Arial; text-align: center; padding-top: 50px;">
 
   <h1>Connect your Pi Wallet to continue</h1>
-  <button id="connectBtn">Connect Pi Wallet</button>
-  <div id="status">Not connected</div>
+  <button onclick="connectWallet()">Connect Pi Wallet</button>
 
-  <!-- User Input Form -->
-  <div id="formSection">
+  <p id="status">Not connected</p>
+
+  <!-- FORM -->
+  <div id="form" style="display:none;">
     <h2>Enter your details</h2>
-    <input type="text" id="usernameInput" placeholder="Enter Username"><br>
-    <input type="text" id="meterInput" placeholder="Enter Meter Number"><br>
-    <button id="submitBtn">Submit</button>
+
+    <input type="text" id="username" placeholder="Enter Username"><br><br>
+    <input type="text" id="meter" placeholder="Enter Meter Number"><br><br>
+
+    <button onclick="submitDetails()">Submit</button>
   </div>
 
-  <!-- Display Result -->
-  <div id="resultSection">
+  <!-- RESULT -->
+  <div id="result" style="display:none;">
     <h2>Welcome to IkejaElectricity</h2>
-    <p>Username: <span id="displayName"></span></p>
-    <p>Meter Number: <span id="displayMeter"></span></p>
+    <p>Username: <span id="showName"></span></p>
+    <p>Meter Number: <span id="showMeter"></span></p>
   </div>
 
   <script>
-    const connectBtn = document.getElementById('connectBtn');
-    const statusDiv = document.getElementById('status');
-    const formSection = document.getElementById('formSection');
-    const resultSection = document.getElementById('resultSection');
+    function connectWallet() {
+      document.getElementById('status').innerText = 'Pi Wallet connected successfully!';
+      document.getElementById('form').style.display = 'block';
+    }
 
-    const submitBtn = document.getElementById('submitBtn');
-    const usernameInput = document.getElementById('usernameInput');
-    const meterInput = document.getElementById('meterInput');
+    function submitDetails() {
+      const name = document.getElementById('username').value;
+      const meter = document.getElementById('meter').value;
 
-    const displayName = document.getElementById('displayName');
-    const displayMeter = document.getElementById('displayMeter');
-
-    // Step 1: Connect Wallet
-    connectBtn.addEventListener('click', () => {
-      statusDiv.textContent = 'Pi Wallet connected successfully!';
-      formSection.style.display = 'block';
-    });
-
-    // Step 2: Submit User Details
-    submitBtn.addEventListener('click', () => {
-      const username = usernameInput.value.trim();
-      const meter = meterInput.value.trim();
-
-      if (username === '' || meter === '') {
-        alert('Please enter both Username and Meter Number');
+      if (!name || !meter) {
+        alert('Please fill all fields');
         return;
       }
 
-      displayName.textContent = username;
-      displayMeter.textContent = meter;
+      document.getElementById('showName').innerText = name;
+      document.getElementById('showMeter').innerText = meter;
 
-      formSection.style.display = 'none';
-      resultSection.style.display = 'block';
-    });
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+    }
   </script>
 
 </body>
-</html>
+</html
