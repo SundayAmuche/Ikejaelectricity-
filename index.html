@@ -1,4 +1,3 @@
-!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -38,16 +37,18 @@
 
   <button id="connectBtn">Connect Pi Wallet</button>
 
-  <div id="walletMessage" class="message">Wallet Connected<br>Pi Wallet connected successfully!</div>
+  <div id="walletMessage" class="message">
+    Wallet Connected<br>Pi Wallet connected successfully!
+  </div>
 
   <script>
     const connectBtn = document.getElementById('connectBtn');
     const walletMessage = document.getElementById('walletMessage');
 
     connectBtn.addEventListener('click', () => {
-      walletMessage.style.display = 'block'; // show message
-      connectBtn.disabled = true; // optional: disable button after click
-      connectBtn.textContent = 'Wallet Connected';
+      walletMessage.style.display = 'block'; // show green message
+      connectBtn.disabled = true; // disable button
+      connectBtn.textContent = 'Wallet Connected'; // optional
     });
   </script>
 </body>
