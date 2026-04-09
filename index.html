@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -14,6 +14,7 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      margin: 0;
     }
 
     h1, h2 {
@@ -29,20 +30,18 @@
       margin-top: 10px;
     }
 
+    /* BLUE - Connect */
     .connect-btn {
-      background: #28a745;
-      color: white;
-    }
-
-    .submit-btn {
       background: #007bff;
       color: white;
-      display: none;
-      transition: 0.3s;
     }
 
-    .submit-btn:hover {
-      background: #0056b3;
+    /* GREEN - Submit */
+    .submit-btn {
+      background: #28a745;
+      color: white;
+      display: none;
+      margin-top: 10px;
     }
 
     .success {
@@ -81,7 +80,7 @@
   <h1>WELCOME TO IKEJAELECTRICITY</h1>
   <h2>Connect your Pi Wallet to continue</h2>
 
-  <!-- CONNECT BUTTON -->
+  <!-- BLUE BUTTON -->
   <button class="connect-btn" onclick="connectWallet()">Connect Pi Wallet</button>
 
   <!-- SUCCESS MESSAGE -->
@@ -98,18 +97,14 @@
     <input type="email" placeholder="Email (optional)">
     <input type="tel" placeholder="Phone (optional)">
 
+    <!-- GREEN BUTTON -->
     <button class="submit-btn" id="submitBtn">Submit / Pay</button>
   </div>
 
   <script>
     function connectWallet() {
-      // Show success message
       document.getElementById("successMsg").style.display = "block";
-
-      // Show form
       document.getElementById("formSection").style.display = "block";
-
-      // Show submit button
       document.getElementById("submitBtn").style.display = "inline-block";
     }
   </script>
