@@ -5,39 +5,51 @@
 
     <style>
         body {
-            background-color: #0b1f3a; /* dark blue */
+            background-color: #0b1f3a;
             color: white;
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #142f57;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 350px;
             text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
 
         h1 {
-            color: #00d4ff; /* light blue */
+            color: #00d4ff;
+            font-size: 20px;
         }
 
         h2 {
-            color: #00ff88; /* green */
+            color: #00ff88;
+            font-size: 16px;
         }
 
         h3 {
-            color: #ffd700; /* gold */
-        }
-
-        form {
-            margin-top: 20px;
+            color: #ffd700;
         }
 
         input {
             padding: 10px;
-            width: 80%;
-            max-width: 300px;
+            width: 100%;
             border-radius: 5px;
             border: none;
             margin-bottom: 10px;
         }
 
         button {
-            padding: 12px 20px;
+            padding: 12px;
+            width: 100%;
             background-color: #00ff88;
             border: none;
             border-radius: 5px;
@@ -55,9 +67,11 @@
 
 <body>
 
+<div class="container">
+
 <h1>WELCOME TO IKEJAELECTRICITY</h1>
 
-<h2>Connect your Pi Wallet to continue</h2>
+<h2>Connect your Pi Wallet</h2>
 
 <p><strong>Wallet Connected</strong></p>
 <p>Pi Wallet connected successfully!</p>
@@ -66,18 +80,17 @@
 
 <form>
 
-    <label>Full Name:</label><br>
-    <input type="text" placeholder="Enter your full name"><br><br>
+    <input type="text" placeholder="Full Name">
 
-    <label>Meter Number:</label><br>
-    <input type="text" placeholder="Enter your meter number"><br><br>
+    <input type="text" placeholder="Meter Number">
 
-    <label>Amount (Pi):</label><br>
-    <input type="number" placeholder="Enter amount"><br><br>
+    <input type="number" placeholder="Amount (Pi)">
 
     <button type="submit">Submit / Pay</button>
 
 </form>
+
+</div>
 
 </body>
 </html>
