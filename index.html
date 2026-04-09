@@ -3,79 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IkejaElectricity DApp</title>
+  <title>IkejaElectricity</title>
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background-color: #f5f5f5; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
-      min-height: 100vh; 
-      margin: 0; 
-      text-align: center;
-    }
-    h1 { font-size: 2em; color: #333; margin-bottom: 10px; }
-    h2 { font-size: 1.2em; color: #666; margin-bottom: 20px; }
-    input { padding: 10px; margin: 5px 0; width: 100%; max-width: 300px; }
-    button { padding: 12px 25px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
-    button:hover { background-color: #45a049; }
-    #userForm { display: none; margin-top: 20px; }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f5f5f5; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; background: #4CAF50; color: white; border: none; border-radius: 5px; }
+    #status { margin-top: 20px; font-weight: bold; color: green; }
   </style>
-
-  <!-- Pi SDK -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <script>
-    Pi.init({ version: "2.0" });
-  </script>
 </head>
 <body>
 
   <h1>WELCOME TO IKEJAELECTRICITY</h1>
   <h2>Connect your Pi Wallet to continue</h2>
-  <button id="connectWallet">Connect Pi Wallet</button>
-
-  <div id="userForm">
-    <h3>Enter your details</h3>
-    <input type="text" id="fullName" placeholder="Full Name">
-    <input type="text" id="meterNumber" placeholder="Meter Number">
-    <input type="number" id="amount" placeholder="Amount (Pi)">
-    <button id="submitPay">Submit / Pay</button>
-  </div>
+  
+  <button id="connectBtn">Connect Pi Wallet</button>
+  
+  <div id="status"></div>
 
   <script>
-    const validationKey = "426edc97e358c691e1f762e0f73e5f8818d450b42509a4ae08610f171eac38bd3cba7ea960f28bb2b591a1ddbc7f4497b";
-    const connectBtn = document.getElementById("connectWallet");
-    const userForm = document.getElementById("userForm");
+    const button = document.getElementById('connectBtn');
+    const status = document.getElementById('status');
 
-    connectBtn.addEventListener("click", function() {
-      const scopes = ['payments'];
-
-      Pi.authenticate(scopes)
-        .then(function(auth) {
-          console.log("Wallet connected successfully!", auth);
-          connectBtn.style.display = "none"; // hide connect button
-          userForm.style.display = "block";   // show the form
-        })
-        .catch(function(error) {
-          console.error("Error connecting wallet:", error);
-          alert("Failed to connect Pi Wallet. Make sure you are in Pi Browser on HTTPS.");
-        });
-    });
-
-    document.getElementById("submitPay").addEventListener("click", function() {
-      const name = document.getElementById("fullName").value;
-      const meter = document.getElementById("meterNumber").value;
-      const amount = document.getElementById("amount").value;
-
-      if (!name || !meter || !amount) {
-        alert("Please fill all fields.");
-        return;
+    button.addEventListener('click', async () => {
+      // Simulate Pi Wallet connection
+      // Replace this with actual Pi Wallet SDK code when ready
+      try {
+        status.innerText = "Connecting to Pi Wallet...";
+        
+        // Simulate connection delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        status.innerText = "Wallet Connected\nPi Wallet connected successfully!";
+      } catch (err) {
+        status.innerText = "Failed to connect Pi Wallet.";
+        console.error(err);
       }
-
-      console.log(`Submitting: Name=${name}, Meter=${meter}, Amount=${amount} Pi`);
-      alert("Payment request would be processed here!");
     });
   </script>
 
