@@ -4,20 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.imgur.com/2yX9u1V.png" type="image/png">
+
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background-color: #f5f5f5;
+      background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
     }
 
     h1 {
       color: #333;
-      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     }
 
     h2 {
@@ -26,15 +36,16 @@
     }
 
     button {
-      padding: 10px 20px;
+      padding: 10px 25px;
       font-size: 16px;
       cursor: pointer;
       background-color: #007BFF;
       color: white;
       border: none;
-      border-radius: 6px;
-      transition: background-color 0.3s, transform 0.2s;
-      margin-top: 10px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      margin-top: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     button:hover {
@@ -84,7 +95,7 @@
   </style>
 </head>
 <body>
-  <h1>WELCOME TO IKEJAELECTRICITY</h1>
+  <h1 id="mainTitle">WELCOME TO IKEJAELECTRICITY</h1>
   <h2>Connect your Pi Wallet</h2>
   <button id="connectBtn">Connect Pi Wallet</button>
 
@@ -100,18 +111,25 @@
   </form>
 
   <script>
+    // Page load animation for title
+    window.addEventListener('load', () => {
+      const title = document.getElementById('mainTitle');
+      setTimeout(() => {
+        title.style.opacity = 1;
+        title.style.transform = "translateY(0)";
+      }, 100);
+    });
+
+    // Wallet connect animation
     const connectBtn = document.getElementById('connectBtn');
     const walletStatus = document.getElementById('walletStatus');
     const detailsForm = document.getElementById('detailsForm');
 
     connectBtn.addEventListener('click', () => {
-      // Show wallet success message with animation
       walletStatus.classList.add('show');
-
-      // Show form after animation
       setTimeout(() => {
         detailsForm.style.display = 'flex';
-      }, 600); // matches CSS transition time
+      }, 600);
     });
   </script>
 </body>
