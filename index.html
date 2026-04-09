@@ -1,50 +1,82 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 <head>
   <title>IkejaElectricity</title>
   <style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f6f8;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f6f8;
+    }
 
-  /* Title */
-  h1 {
-    color: #007BFF; /* Blue */
-  }
+    /* Title */
+    h1 {
+      color: #007BFF; /* Blue */
+    }
 
-  /* Button */
-  button {
-    background-color: #28a745; /* Green */
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
+    /* Buttons */
+    button {
+      background-color: #28a745; /* Green */
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-  /* Button hover */
-  button:hover {
-    background-color: #218838;
-  }
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* Input fields */
+    input {
+      padding: 10px;
+      font-size: 14px;
+      margin: 5px 0;
+      width: 80%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Hidden elements initially */
+    #walletStatus, #userForm {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
   <h1>WELCOME TO IKEJAELECTRICITY</h1>
+
   <h2>Connect your Pi Wallet</h2>
-  <p><b>Wallet Connected</b></p>
-  <p>Pi Wallet connected successfully!</p>
+  <button id="connectBtn" onclick="connectWallet()">Connect Pi Wallet</button>
 
-  <h3>Enter your details</h3>
-  <!-- Example input fields -->
-  <input type="text" placeholder="Full Name"><br><br>
-  <input type="text" placeholder="Meter Number"><br><br>
-  <input type="number" placeholder="Amount (Pi)"><br><br>
+  <!-- Wallet connection status -->
+  <div id="walletStatus">
+    <p><b>Wallet Connected</b></p>
+    <p>Pi Wallet connected successfully!</p>
+  </div>
 
-  <button>Submit / Pay</button>
+  <!-- User input form -->
+  <div id="userForm">
+    <h3>Enter your details</h3>
+    <input type="text" placeholder="Full Name"><br>
+    <input type="text" placeholder="Meter Number"><br>
+    <input type="number" placeholder="Amount (Pi)"><br><br>
+    <button>Submit / Pay</button>
+  </div>
+
+  <script>
+    function connectWallet() {
+      // Show wallet status and input form
+      document.getElementById("walletStatus").style.display = "block";
+      document.getElementById("userForm").style.display = "block";
+      // Hide the connect button
+      document.getElementById("connectBtn").style.display = "none";
+    }
+  </script>
 
 </body>
 </html>
