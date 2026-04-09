@@ -16,11 +16,17 @@
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
       border: none;
       border-radius: 5px;
       margin-top: 10px;
+    }
+    #connectBtn {
+      background-color: #007BFF; /* trust blue */
+      color: white;
+    }
+    #submitBtn {
+      background-color: #4CAF50; /* green */
+      color: white;
     }
     .message {
       margin-top: 20px;
@@ -62,6 +68,8 @@
     <input type="text" class="input-field" placeholder="Full Name" id="fullName">
     <input type="text" class="input-field" placeholder="Meter Number" id="meterNumber">
     <input type="number" class="input-field" placeholder="Amount (Pi)" id="amount">
+    <input type="email" class="input-field" placeholder="Email (optional)" id="email">
+    <input type="tel" class="input-field" placeholder="Phone (optional)" id="phone">
     <button id="submitBtn">Submit / Pay</button>
   </div>
 
@@ -82,13 +90,15 @@
       const name = document.getElementById('fullName').value;
       const meter = document.getElementById('meterNumber').value;
       const amount = document.getElementById('amount').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
 
       if(!name || !meter || !amount) {
-        alert('Please fill in all fields');
+        alert('Please fill in Full Name, Meter Number, and Amount.');
         return;
       }
-      alert(`Payment Submitted!\nName: ${name}\nMeter: ${meter}\nAmount: ${amount} Pi`);
-      // Here you can add Pi transaction code
+      alert(`Payment Submitted!\nName: ${name}\nMeter: ${meter}\nAmount: ${amount} Pi\nEmail: ${email}\nPhone: ${phone}`);
+      // Here you can integrate Pi payment code
     });
   </script>
 </body>
