@@ -1,77 +1,118 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      background: #f5f5f5;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
-      padding: 20px;
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
-      color: #333;
     }
 
-    h2 {
-      text-align: center;
-      color: #555;
-      margin-bottom: 20px;
-    }
-
-    .wallet-status {
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      padding: 15px 20px;
-      border-radius: 8px;
-      margin: 15px 0;
-      text-align: center;
-      animation: slideDown 0.5s ease-out;
-    }
-
-    @keyframes slideDown {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .submit-btn {
-      background-color: #007bff;
-      color: #fff;
-      padding: 12px 25px;
+    button {
+      padding: 12px 20px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
-      transition: background-color 0.3s ease;
       margin-top: 10px;
     }
 
+    .connect-btn {
+      background: #28a745;
+      color: white;
+    }
+
+    .submit-btn {
+      background: #007bff;
+      color: white;
+      display: none;
+      transition: 0.3s;
+    }
+
     .submit-btn:hover {
-      background-color: #0056b3;
+      background: #0056b3;
+    }
+
+    .success {
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      display: none;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .form {
+      display: none;
+      margin-top: 15px;
+    }
+
+    input {
+      display: block;
+      width: 250px;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
+
 <body>
 
   <h1>WELCOME TO IKEJAELECTRICITY</h1>
   <h2>Connect your Pi Wallet to continue</h2>
 
-  <div class="wallet-status">
+  <!-- CONNECT BUTTON -->
+  <button class="connect-btn" onclick="connectWallet()">Connect Pi Wallet</button>
+
+  <!-- SUCCESS MESSAGE -->
+  <div id="successMsg" class="success">
     Wallet Connected<br>
     Pi Wallet connected successfully!
   </div>
 
-  <button class="submit-btn">Submit / Pay</button>
+  <!-- FORM -->
+  <div id="formSection" class="form">
+    <input type="text" placeholder="Full Name">
+    <input type="text" placeholder="Meter Number">
+    <input type="number" placeholder="Amount (Pi)">
+    <input type="email" placeholder="Email (optional)">
+    <input type="tel" placeholder="Phone (optional)">
+
+    <button class="submit-btn" id="submitBtn">Submit / Pay</button>
+  </div>
+
+  <script>
+    function connectWallet() {
+      // Show success message
+      document.getElementById("successMsg").style.display = "block";
+
+      // Show form
+      document.getElementById("formSection").style.display = "block";
+
+      // Show submit button
+      document.getElementById("submitBtn").style.display = "inline-block";
+    }
+  </script>
 
 </body>
 </html>
