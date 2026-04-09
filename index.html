@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       padding: 20px;
       background-color: #f5f5f5;
-      text-align: center; /* Center all content */
+      text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -17,7 +17,7 @@
 
     h1 {
       color: #333;
-      text-align: center; /* Ensure H1 is centered */
+      text-align: center;
     }
 
     h2 {
@@ -94,6 +94,8 @@
     <input type="text" placeholder="Full Name" required>
     <input type="text" placeholder="Meter Number" required>
     <input type="number" placeholder="Amount (Pi)" required>
+    <input type="email" placeholder="Email (optional)">
+    <input type="tel" placeholder="Phone Number (optional)">
     <button type="submit" id="submitBtn">Submit / Pay</button>
   </form>
 
@@ -103,13 +105,13 @@
     const detailsForm = document.getElementById('detailsForm');
 
     connectBtn.addEventListener('click', () => {
-      // Add animation class
+      // Show wallet success message with animation
       walletStatus.classList.add('show');
 
-      // Show the form after animation
+      // Show form after animation
       setTimeout(() => {
         detailsForm.style.display = 'flex';
-      }, 600); // same as CSS transition time
+      }, 600); // matches CSS transition time
     });
   </script>
 </body>
