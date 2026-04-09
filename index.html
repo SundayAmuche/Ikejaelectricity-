@@ -1,136 +1,77 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IkejaElectricity</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://i.imgur.com/2yX9u1V.png" type="image/png">
-
+  <title>IkejaElectricity DApp</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    h1 {
-      color: #333;
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-    }
-
-    h2 {
-      color: #555;
-      margin-top: 20px;
-    }
-
-    button {
-      padding: 10px 25px;
-      font-size: 16px;
-      cursor: pointer;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      transition: all 0.3s;
-      margin-top: 15px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    button:hover {
-      background-color: #0056b3;
-      transform: scale(1.05);
-    }
-
-    #walletStatus {
-      margin-top: 20px;
-      font-weight: bold;
-      color: green;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    #walletStatus.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    form {
-      margin-top: 30px;
-      display: none;
-      flex-direction: column;
-      gap: 15px;
-      max-width: 300px;
-      width: 100%;
-      align-items: center;
-    }
-
-    input {
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      width: 100%;
-    }
-
-    #submitBtn {
-      background-color: #28a745;
-    }
-
-    #submitBtn:hover {
-      background-color: #1e7e34;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5; }
+    h1, h2, h3 { color: #333; }
+    input { padding: 8px; margin: 5px 0; width: 100%; max-width: 300px; }
+    button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    #userForm { display: none; margin-top: 20px; }
   </style>
+
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    Pi.init({ version: "2.0" });
+  </script>
 </head>
 <body>
-  <h1 id="mainTitle">WELCOME TO IKEJAELECTRICITY</h1>
-  <h2>Connect your Pi Wallet</h2>
-  <button id="connectBtn">Connect Pi Wallet</button>
 
-  <div id="walletStatus">Done successfully!</div>
+  <h1>WELCOME TO IKEJAELECTRICITY</h1>
+  <h2>Connect your Pi Wallet to continue</h2>
+  <button id="connectWallet">Connect Pi Wallet</button>
 
-  <form id="detailsForm">
-    <input type="text" placeholder="Full Name" required>
-    <input type="text" placeholder="Meter Number" required>
-    <input type="number" placeholder="Amount (Pi)" required>
-    <input type="email" placeholder="Email (optional)">
-    <input type="tel" placeholder="Phone Number (optional)">
-    <button type="submit" id="submitBtn">Submit / Pay</button>
-  </form>
+  <div id="userForm">
+    <h3>Enter your details</h3>
+    <label>Full Name:</label>
+    <input type="text" id="fullName" placeholder="Your full name">
+    <label>Meter Number:</label>
+    <input type="text" id="meterNumber" placeholder="Your meter number">
+    <label>Amount (Pi):</label>
+    <input type="number" id="amount" placeholder="Amount in Pi">
+    <button id="submitPay">Submit / Pay</button>
+  </div>
 
   <script>
-    // Page load animation for title
-    window.addEventListener('load', () => {
-      const title = document.getElementById('mainTitle');
-      setTimeout(() => {
-        title.style.opacity = 1;
-        title.style.transform = "translateY(0)";
-      }, 100);
+    const validationKey = "426edc97e358c691e1f762e0f73e5f8818d450b42509a4ae08610f171eac38bd3cba7ea960f28bb2b591a1ddbc7f4497b";
+
+    const connectBtn = document.getElementById("connectWallet");
+    const userForm = document.getElementById("userForm");
+
+    connectBtn.addEventListener("click", function() {
+      const scopes = ['payments'];
+
+      Pi.authenticate(scopes)
+        .then(function(auth) {
+          console.log("Wallet connected successfully!", auth);
+          connectBtn.style.display = "none"; // hide connect button
+          userForm.style.display = "block";   // show the form
+        })
+        .catch(function(error) {
+          console.error("Error connecting wallet:", error);
+          alert("Failed to connect Pi Wallet. Try again.");
+        });
     });
 
-    // Wallet connect animation
-    const connectBtn = document.getElementById('connectBtn');
-    const walletStatus = document.getElementById('walletStatus');
-    const detailsForm = document.getElementById('detailsForm');
+    // Placeholder for form submit
+    document.getElementById("submitPay").addEventListener("click", function() {
+      const name = document.getElementById("fullName").value;
+      const meter = document.getElementById("meterNumber").value;
+      const amount = document.getElementById("amount").value;
 
-    connectBtn.addEventListener('click', () => {
-      walletStatus.classList.add('show');
-      setTimeout(() => {
-        detailsForm.style.display = 'flex';
-      }, 600);
+      if (!name || !meter || !amount) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      console.log(`Submitting: Name=${name}, Meter=${meter}, Amount=${amount} Pi`);
+      alert("Payment request would be processed here!");
     });
   </script>
+
 </body>
 </html>
