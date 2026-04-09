@@ -1,75 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IkejaElectricity</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      text-align: center;
-      padding: 50px;
-    }
-    h1, h2, h3 {
-      color: purple !important;
-    }
-    p {
-      font-size: 1.2em;
-      color: #333;
-      display: none;
-    }
-    input[type="text"] {
-      padding: 10px;
-      width: 250px;
-      margin: 5px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-    }
-    input[type="submit"], button {
-      background-color: purple !important;
-      color: white !important;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    #formSection {
-      display: none; /* hidden initially */
-      margin-top: 20px;
-    }
-  </style>
+    <title>IkejaElectricity App</title>
 </head>
+
 <body>
 
-  <h1>WELCOME TO IKEJAELECTRICITY</h1>
-  <h2>Connect your Pi Wallet to continue</h2>
+<h1>WELCOME TO IKEJAELECTRICITY</h1>
 
-  <button id="connectBtn">Connect Pi Wallet</button>
-  <p id="successMsg">Pi Wallet connected successfully!</p>
+<h2>Connect your Pi Wallet to continue</h2>
 
-  <div id="formSection">
-    <h3>Enter your details</h3>
-    <input type="text" placeholder="Name" />
-    <input type="text" placeholder="Meter Number" />
-    <br>
-    <input type="submit" value="Submit / Pay" />
-  </div>
+<p><strong>Wallet Connected</strong></p>
+<p>Pi Wallet connected successfully!</p>
 
-  <script>
-    const connectBtn = document.getElementById('connectBtn');
-    const successMsg = document.getElementById('successMsg');
-    const formSection = document.getElementById('formSection');
+<h3>Enter your details</h3>
 
-    connectBtn.addEventListener('click', () => {
-      successMsg.style.display = 'block';
-      formSection.style.display = 'block'; // show form
-      connectBtn.disabled = true;
-      connectBtn.textContent = 'Wallet Connected';
-    });
-  </script>
+<form>
+    <label>Full Name:</label><br>
+    <input type="text" placeholder="Enter your full name"><br><br>
+
+    <label>Meter Number:</label><br>
+    <input type="text" placeholder="Enter your meter number"><br><br>
+
+    <label>Amount (Pi):</label><br>
+    <input type="number" placeholder="Enter amount"><br><br>
+
+    <button type="submit">Submit / Pay</button>
+</form>
 
 </body>
 </html>
