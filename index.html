@@ -31,6 +31,7 @@
       font-size: 1.2em;
       color: #333;
       margin-bottom: 20px;
+      display: none; /* hide initially */
     }
     input[type="text"] {
       padding: 10px;
@@ -58,12 +59,24 @@
 <body>
   <h1>WELCOME TO IKEJAELECTRICITY</h1>
   <h2>Connect your Pi Wallet to continue</h2>
-  <button>Connect Pi Wallet</button>
-  <p>Pi Wallet connected successfully!</p>
+  <button id="connectBtn">Connect Pi Wallet</button>
+  <p id="successMsg">Pi Wallet connected successfully!</p>
+  
   <h3>Enter your details</h3>
   <input type="text" placeholder="Name" />
   <input type="text" placeholder="Meter Number" />
   <br>
   <input type="submit" value="Submit / Pay" />
+
+  <script>
+    const connectBtn = document.getElementById('connectBtn');
+    const successMsg = document.getElementById('successMsg');
+
+    connectBtn.addEventListener('click', () => {
+      successMsg.style.display = 'block'; // show message when clicked
+      connectBtn.disabled = true;          // optionally disable button after connection
+      connectBtn.textContent = 'Wallet Connected';
+    });
+  </script>
 </body>
 </html>
