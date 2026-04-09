@@ -1,14 +1,25 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity DApp</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5; }
-    h1, h2, h3 { color: #333; }
-    input { padding: 8px; margin: 5px 0; width: 100%; max-width: 300px; }
-    button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    body { 
+      font-family: Arial, sans-serif; 
+      background-color: #f5f5f5; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      min-height: 100vh; 
+      margin: 0; 
+      text-align: center;
+    }
+    h1 { font-size: 2em; color: #333; margin-bottom: 10px; }
+    h2 { font-size: 1.2em; color: #666; margin-bottom: 20px; }
+    input { padding: 10px; margin: 5px 0; width: 100%; max-width: 300px; }
+    button { padding: 12px 25px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
     button:hover { background-color: #45a049; }
     #userForm { display: none; margin-top: 20px; }
   </style>
@@ -27,18 +38,14 @@
 
   <div id="userForm">
     <h3>Enter your details</h3>
-    <label>Full Name:</label>
-    <input type="text" id="fullName" placeholder="Your full name">
-    <label>Meter Number:</label>
-    <input type="text" id="meterNumber" placeholder="Your meter number">
-    <label>Amount (Pi):</label>
-    <input type="number" id="amount" placeholder="Amount in Pi">
+    <input type="text" id="fullName" placeholder="Full Name">
+    <input type="text" id="meterNumber" placeholder="Meter Number">
+    <input type="number" id="amount" placeholder="Amount (Pi)">
     <button id="submitPay">Submit / Pay</button>
   </div>
 
   <script>
     const validationKey = "426edc97e358c691e1f762e0f73e5f8818d450b42509a4ae08610f171eac38bd3cba7ea960f28bb2b591a1ddbc7f4497b";
-
     const connectBtn = document.getElementById("connectWallet");
     const userForm = document.getElementById("userForm");
 
@@ -53,11 +60,10 @@
         })
         .catch(function(error) {
           console.error("Error connecting wallet:", error);
-          alert("Failed to connect Pi Wallet. Try again.");
+          alert("Failed to connect Pi Wallet. Make sure you are in Pi Browser on HTTPS.");
         });
     });
 
-    // Placeholder for form submit
     document.getElementById("submitPay").addEventListener("click", function() {
       const name = document.getElementById("fullName").value;
       const meter = document.getElementById("meterNumber").value;
