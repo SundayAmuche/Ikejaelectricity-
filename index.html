@@ -1,71 +1,43 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IkejaElectricity</title>
 
-  <!-- Pi SDK -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #0c1b2a;
+      color: white;
       text-align: center;
-      padding: 20px;
-      background: #f5f5f5;
+      margin: 0;
+      padding-top: 80px;
     }
 
     h1 {
-      margin-top: 40px;
+      font-size: 26px;
+    }
+
+    h3 {
+      font-weight: normal;
+      color: #ccc;
     }
 
     button {
+      margin-top: 20px;
       padding: 12px 20px;
-      background: #007bff;
+      font-size: 16px;
+      background: #2d8cff;
       color: white;
       border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s;
+      border-radius: 8px;
     }
 
-    button:hover {
-      background: #0056b3;
-    }
-
-    .success {
-      display: none;
-      margin-top: 20px;
-      padding: 15px;
-      background: #28a745;
-      color: white;
-      border-radius: 5px;
-      animation: slideDown 0.5s ease;
-    }
-
-    @keyframes slideDown {
-      from {
-        transform: translateY(-20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .form {
-      display: none;
-      margin-top: 20px;
-    }
-
-    input {
+    a {
       display: block;
-      margin: 10px auto;
-      padding: 10px;
-      width: 80%;
-      max-width: 300px;
+      margin-top: 20px;
+      color: #00c3ff;
     }
   </style>
 </head>
@@ -77,79 +49,15 @@
 
   <button onclick="connectWallet()">Connect Pi Wallet</button>
 
-  <!-- SUCCESS MESSAGE -->
-  <div class="success" id="successMsg">
-    <h3 style="margin:0;">Wallet Connected</h3>
-    <p style="margin:5px 0 0;">Pi Wallet connected successfully!</p>
-  </div>
-
-  <!-- FORM -->
-  <div class="form" id="formSection">
-    <h3>Enter your details</h3>
-
-    <input type="text" placeholder="Full Name" required>
-    <input type="text" placeholder="Meter Number" required>
-    <input type="number" placeholder="Amount (Pi)" required>
-    <input type="email" placeholder="Email (optional)">
-    <input type="tel" placeholder="Phone (optional)">
-
-    <br>
-    <button onclick="makePayment()">Submit / Pay</button>
-  </div>
+  <a href="https://ikejaelectricity.vercel.app/validation-key.txt">
+    View Validation Key
+  </a>
 
   <script>
-    // CONNECT WALLET
-    async function connectWallet() {
-      try {
-        Pi.init({ version: "2.0" });
-
-        const scopes = ['username', 'payments'];
-
-        const auth = await Pi.authenticate(scopes, function(payment) {
-          console.log("Payment ready", payment);
-        });
-
-        console.log("Authenticated user:", auth);
-
-        document.getElementById("successMsg").style.display = "block";
-        document.getElementById("formSection").style.display = "block";
-
-      } catch (error) {
-        alert("❌ Failed. Open this inside Pi Browser.");
-        console.error(error);
-      }
-    }
-
-    // MAKE PAYMENT
-    function makePayment() {
-      const amount = document.querySelector('input[type="number"]').value;
-
-      if (!amount) {
-        alert("Enter amount");
-        return;
-      }
-
-      Pi.createPayment({
-        amount: Number(amount),
-        memo: "Electricity Payment",
-        metadata: { type: "ikejaelectricity" }
-      }, {
-        onReadyForServerApproval: function(paymentId) {
-          console.log("Ready for approval:", paymentId);
-        },
-        onReadyForServerCompletion: function(paymentId, txid) {
-          console.log("Payment completed:", paymentId, txid);
-          alert("✅ Payment successful!");
-        },
-        onCancel: function(paymentId) {
-          alert("❌ Payment cancelled");
-        },
-        onError: function(error, payment) {
-          console.error("Payment error:", error);
-        }
-      });
+    function connectWallet() {
+      alert("Connecting to Pi Wallet...");
     }
   </script>
-<a href="/validation-key.txt">View Validation Key</a>
+
 </body>
 </html>
