@@ -1,61 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IkejaElectricity</title>
 
   <style>
-    body {
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
       font-family: Arial, sans-serif;
-      background: #0c1b2a;
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding-top: 80px;
+      background:#0c1b2a;
+      color:white;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px;
     }
 
-    h1 {
-      font-size: 26px;
+    .container{
+      width:100%;
+      max-width:400px;
+      animation:fadeIn 1s ease;
     }
 
-    h3 {
-      font-weight: normal;
-      color: #ccc;
+    h1{
+      font-size:28px;
+      margin-bottom:15px;
+      color:white;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      font-size: 16px;
-      background: #2d8cff;
-      color: white;
-      border: none;
-      border-radius: 8px;
+    h3{
+      font-size:16px;
+      font-weight:normal;
+      color:#cfd8dc;
+      margin-bottom:30px;
     }
 
-    a {
-      display: block;
-      margin-top: 20px;
-      color: #00c3ff;
+    button{
+      background:#2d8cff;
+      color:white;
+      border:none;
+      padding:14px 24px;
+      font-size:16px;
+      border-radius:10px;
+      cursor:pointer;
+      transition:0.3s ease;
+      width:100%;
+      font-weight:bold;
+    }
+
+    button:hover{
+      background:#1c74e8;
+      transform:scale(1.03);
+    }
+
+    button:active{
+      transform:scale(0.98);
+    }
+
+    #successMessage{
+      display:none;
+      margin-top:20px;
+      background:#00b894;
+      padding:12px;
+      border-radius:8px;
+      animation:slideDown 0.5s ease;
+    }
+
+    a{
+      display:inline-block;
+      margin-top:25px;
+      color:#00c3ff;
+      text-decoration:none;
+      font-size:15px;
+    }
+
+    a:hover{
+      text-decoration:underline;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes slideDown{
+      from{
+        opacity:0;
+        transform:translateY(-20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <h1>WELCOME TO IKEJAELECTRICITY</h1>
-  <h3>Connect your Pi Wallet to continue</h3>
+  <div class="container">
 
-  <button onclick="connectWallet()">Connect Pi Wallet</button>
+    <h1>WELCOME TO IKEJAELECTRICITY</h1>
 
-  <a href="https://ikejaelectricity.vercel.app/validation-key.txt">
-    View Validation Key
-  </a>
+    <h3>Connect your Pi Wallet to continue</h3>
+
+    <button onclick="connectWallet()">
+      Connect Pi Wallet
+    </button>
+
+    <div id="successMessage">
+      Pi Wallet connected successfully!
+    </div>
+
+    <a href="/validation-key.txt" target="_blank">
+      View Validation Key
+    </a>
+
+  </div>
 
   <script>
     function connectWallet() {
-      alert("Connecting to Pi Wallet...");
+
+      const message = document.getElementById("successMessage");
+
+      message.style.display = "block";
+
     }
   </script>
 
