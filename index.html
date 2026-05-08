@@ -1,37 +1,52 @@
-<div class="container">
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
-  <h1>WELCOME TO IKEJAELECTRICITY</h1>
+<script>
+  Pi.init({ version: "2.0", sandbox: true });
 
-  <h3>Connect your Pi Wallet to continue</h3>
+  async function connectWallet() {
 
-  <button onclick="connectWallet()">
-    Connect Pi Wallet
-  </button>
+    try {
 
-  <div id="successMessage" style="display:none; margin-top:20px; background:#00b894; padding:12px; border-radius:8px;">
-    Pi Wallet connected successfully!
-  </div>
+      const scopes = ['username', 'payments'];
 
-  <!-- FORM -->
-  <div id="formSection" style="display:none; margin-top:20px;">
+      const authResult = await Pi.authenticate(
+        scopes,
+        onIncompletePaymentFound
+      );
 
-    <h3>Electricity Payment Form</h3>
+      document.getElementById("successMessage").style.display = "block";
 
-    <input type="text" id="meterNumber" placeholder="Enter Meter Number"
-      style="width:100%;padding:10px;margin:10px 0;border-radius:6px;border:none;" />
+      document.getElementById("formSection").style.display = "block";
 
-    <input type="number" id="amount" placeholder="Enter Amount"
-      style="width:100%;padding:10px;margin:10px 0;border-radius:6px;border:none;" />
+      console.log(authResult.user);
 
-    <button onclick="submitForm()"
-      style="background:#2d8cff;color:white;border:none;padding:12px;border-radius:8px;width:100%;">
-      Submit
-    </button>
+    } catch (error) {
 
-  </div>
+      console.error(error);
 
-  <a href="/validation-key.txt" target="_blank">
-    View Validation Key
-  </a>
+      alert("Pi Wallet connection failed");
 
-</div>
+    }
+  }
+
+  function onIncompletePaymentFound(payment) {
+    console.log(payment);
+  }
+
+  function submitForm() {
+
+    const meter = document.getElementById("meterNumber").value;
+
+    const amount = document.getElementById("amount").value;
+
+    if (!meter || !amount) {
+
+      alert("Please fill all fields");
+
+      return;
+    }
+
+    alert("Form submitted successfully");
+
+  }
+</script>
