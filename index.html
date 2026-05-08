@@ -1,146 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IkejaElectricity</title>
+<div class="container">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+  <h1>WELCOME TO IKEJAELECTRICITY</h1>
 
-    body{
-      font-family: Arial, sans-serif;
-      background:#0c1b2a;
-      color:white;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      padding:20px;
-    }
+  <h3>Connect your Pi Wallet to continue</h3>
 
-    .container{
-      width:100%;
-      max-width:400px;
-      animation:fadeIn 1s ease;
-    }
+  <button onclick="connectWallet()">
+    Connect Pi Wallet
+  </button>
 
-    h1{
-      font-size:28px;
-      margin-bottom:15px;
-      color:white;
-    }
+  <div id="successMessage" style="display:none; margin-top:20px; background:#00b894; padding:12px; border-radius:8px;">
+    Pi Wallet connected successfully!
+  </div>
 
-    h3{
-      font-size:16px;
-      font-weight:normal;
-      color:#cfd8dc;
-      margin-bottom:30px;
-    }
+  <!-- FORM -->
+  <div id="formSection" style="display:none; margin-top:20px;">
 
-    button{
-      background:#2d8cff;
-      color:white;
-      border:none;
-      padding:14px 24px;
-      font-size:16px;
-      border-radius:10px;
-      cursor:pointer;
-      transition:0.3s ease;
-      width:100%;
-      font-weight:bold;
-    }
+    <h3>Electricity Payment Form</h3>
 
-    button:hover{
-      background:#1c74e8;
-      transform:scale(1.03);
-    }
+    <input type="text" id="meterNumber" placeholder="Enter Meter Number"
+      style="width:100%;padding:10px;margin:10px 0;border-radius:6px;border:none;" />
 
-    button:active{
-      transform:scale(0.98);
-    }
+    <input type="number" id="amount" placeholder="Enter Amount"
+      style="width:100%;padding:10px;margin:10px 0;border-radius:6px;border:none;" />
 
-    #successMessage{
-      display:none;
-      margin-top:20px;
-      background:#00b894;
-      padding:12px;
-      border-radius:8px;
-      animation:slideDown 0.5s ease;
-    }
-
-    a{
-      display:inline-block;
-      margin-top:25px;
-      color:#00c3ff;
-      text-decoration:none;
-      font-size:15px;
-    }
-
-    a:hover{
-      text-decoration:underline;
-    }
-
-    @keyframes fadeIn{
-      from{
-        opacity:0;
-        transform:translateY(20px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    @keyframes slideDown{
-      from{
-        opacity:0;
-        transform:translateY(-20px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="container">
-
-    <h1>WELCOME TO IKEJAELECTRICITY</h1>
-
-    <h3>Connect your Pi Wallet to continue</h3>
-
-    <button onclick="connectWallet()">
-      Connect Pi Wallet
+    <button onclick="submitForm()"
+      style="background:#2d8cff;color:white;border:none;padding:12px;border-radius:8px;width:100%;">
+      Submit
     </button>
-
-    <div id="successMessage">
-      Pi Wallet connected successfully!
-    </div>
-
-    <a href="/validation-key.txt" target="_blank">
-      View Validation Key
-    </a>
 
   </div>
 
-  <script>
-    function connectWallet() {
+  <a href="/validation-key.txt" target="_blank">
+    View Validation Key
+  </a>
 
-      const message = document.getElementById("successMessage");
-
-      message.style.display = "block";
-
-    }
-  </script>
-
-</body>
-</html>
+</div>
