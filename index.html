@@ -136,41 +136,27 @@
 
   <script>
 
+    Pi.init({ version: "2.0", sandbox: true });
+
     async function connectWallet() {
 
       const message = document.getElementById("successMessage");
 
       try {
 
-        if (window.Pi) {
+        const scopes = ['username', 'payments'];
 
-          Pi.init({ version: "2.0" });
+        const auth = await Pi.authenticate(scopes);
 
-          await Pi.authenticate(
-            ["username", "payments"],
-            function(auth) {
+        console.log(auth);
 
-              message.style.display = "block";
+        message.style.display = "block";
 
-            },
-            function(error) {
+      } catch (err) {
 
-              alert("Authentication failed");
+        console.error(err);
 
-            }
-          );
-
-        } else {
-
-          alert("Please open inside Pi Browser");
-
-        }
-
-      } catch(err) {
-
-        console.log(err);
-
-        alert("Connection error");
+        alert("Please open inside Pi Browser and try again");
 
       }
 
