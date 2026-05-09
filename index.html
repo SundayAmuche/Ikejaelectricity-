@@ -94,18 +94,20 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Pi SDK loaded");
   }
 });
-
 async function connectWallet() {
   try {
 
     if (!window.Pi) {
-      alert("Open inside Pi Browser");
+      alert("Pi SDK not available");
       return;
     }
 
     const scopes = ["username", "payments"];
 
-    const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
+    const authResult = await Pi.authenticate(
+      scopes,
+      onIncompletePaymentFound
+    );
 
     console.log(authResult.user);
 
