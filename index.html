@@ -5,24 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IkejaElectricity</title>
 
-  <!-- ✅ Pi SDK must be here -->
+  <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
     body{
+      margin:0;
       font-family: Arial, sans-serif;
       background:#0c1b2a;
       color:white;
-      height:100vh;
       display:flex;
       justify-content:center;
       align-items:center;
+      height:100vh;
       text-align:center;
       padding:20px;
     }
@@ -33,15 +28,15 @@
     }
 
     button{
+      width:100%;
+      padding:14px;
+      margin-top:10px;
+      border:none;
+      border-radius:10px;
       background:#2d8cff;
       color:white;
-      border:none;
-      padding:14px;
-      width:100%;
-      border-radius:10px;
       font-weight:bold;
       cursor:pointer;
-      margin-top:10px;
     }
 
     input{
@@ -52,6 +47,11 @@
       border-radius:6px;
     }
 
+    #formSection{
+      display:none;
+      margin-top:15px;
+    }
+
     #successMessage{
       display:none;
       margin-top:15px;
@@ -59,33 +59,17 @@
       padding:10px;
       border-radius:8px;
     }
-
-    #formSection{
-      display:none;
-      margin-top:15px;
-    }
   </style>
 </head>
 
 <body>
 
 <div class="container">
-  <div id="formSection">
-  <input type="text" id="meterNumber" placeholder="Meter Number">
-  <input type="number" id="amount" placeholder="Amount">
-  <button onclick="submitForm()">Submit</button>
-    </div>
-<div id="successMessage">Pi Wallet connected successfully!</div>
-  <a href="/validation-key.txt" target="_blank" style="color:#00c3ff; display:block; margin-top:20px;">
-  View Validation Key
-</a>
 
   <h1>WELCOME TO IKEJAELECTRICITY</h1>
   <p>Connect your Pi Wallet to continue</p>
 
   <button onclick="connectWallet()">Connect Pi Wallet</button>
-
-  <div id="successMessage">Pi Wallet connected successfully!</div>
 
   <div id="formSection">
     <input type="text" id="meterNumber" placeholder="Meter Number">
@@ -93,31 +77,26 @@
     <button onclick="submitForm()">Submit</button>
   </div>
 
+  <div id="successMessage">Pi Wallet connected successfully!</div>
+
+  <a href="/validation-key.txt" target="_blank" style="color:#00c3ff; display:block; margin-top:20px;">
+    View Validation Key
+  </a>
+
 </div>
 
-<!-- ✅ JS goes at bottom -->
 <script>
-let PiReady = false;
-
 document.addEventListener("DOMContentLoaded", function () {
-  const waitForPi = setInterval(() => {
-
-    if (window.Pi) {
-      clearInterval(waitForPi);
-
-      Pi.init({ version: "2.0", sandbox: false });
-
-      PiReady = true;
-      console.log("Pi SDK fully initialized");
-    }
-
-  }, 300);
+  if (window.Pi) {
+    Pi.init({ version: "2.0" });
+    console.log("Pi SDK loaded");
+  }
 });
 
 async function connectWallet() {
   try {
 
-    if (!window.Pi || !PiReady) {
+    if (!window.Pi) {
       alert("Open inside Pi Browser");
       return;
     }
@@ -133,6 +112,7 @@ async function connectWallet() {
 
   } catch (error) {
     console.error(error);
+    alert("Connection failed");
   }
 }
 
