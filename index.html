@@ -193,7 +193,61 @@
       alert("Form submitted successfully");
 
     }
-  </script>
+  <script>
+  let PiReady = false;
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    try {
+      if (window.Pi) {
+        await Pi.init({ version: "2.0" });
+        PiReady = true;
+        console.log("Pi SDK initialized");
+      } else {
+        console.log("Pi SDK not found");
+      }
+    } catch (e) {
+      console.error("Pi init error:", e);
+    }
+  });
+
+  async function connectWallet() {
+    try {
+      if (!window.Pi || !PiReady) {
+        alert("Open this app inside Pi Browser");
+        return;
+      }
+
+      const scopes = ["username", "payments"];
+
+      const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+      console.log("User:", authResult.user);
+
+      document.getElementById("successMessage").style.display = "block";
+      document.getElementById("formSection").style.display = "block";
+
+    } catch (error) {
+      console.error("Wallet error:", error);
+      alert("Pi Wallet connection failed");
+    }
+  }
+
+  function onIncompletePaymentFound(payment) {
+    console.log("Incomplete payment:", payment);
+  }
+
+  function submitForm() {
+    const meter = document.getElementById("meterNumber").value;
+    const amount = document.getElementById("amount").value;
+
+    if (!meter || !amount) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    alert("Form submitted successfully");
+  }
+</script>
 
 </body>
 </html>
