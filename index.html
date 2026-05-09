@@ -142,12 +142,10 @@
       if (window.Pi) {
         clearInterval(waitForPi);
 
-        Pi.init({ version: "2.0" }).then(() => {
-          PiReady = true;
-          console.log("Pi SDK fully initialized");
-        }).catch(err => {
-          console.error("Pi init error:", err);
-        });
+      Pi.init({ version: "2.0", sandbox: false });
+PiReady = true;
+  console.log("Pi SDK fully initialized");
+}
       }
     }, 300);
   });
