@@ -135,7 +135,6 @@
   </div>
 
   <script>
-    alert(window.Pi);
     document.addEventListener("DOMContentLoaded", function () {
   console.log(window.Pi);
 
@@ -146,7 +145,6 @@
 
 function connectWallet() {
   if (!window.Pi) {
-    alert("Pi SDK not loaded");
     return;
   }
 
@@ -158,7 +156,6 @@ function connectWallet() {
     },
     function (error) {
       console.log(error);
-      alert("Connection failed");
     }
   );
 }
@@ -172,7 +169,6 @@ function submitForm() {
     return;
   }
 
-  alert("Form submitted successfully");
 }
   let PiReady = false;
 
@@ -212,7 +208,7 @@ function submitForm() {
 
     } catch (error) {
       console.error(error);
-      alert("Pi Wallet connection failed");
+      
     }
   }
 
