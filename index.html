@@ -151,7 +151,6 @@
       }
     }, 300);
   });
-</script>
 
   async function connectWallet() {
     try {
@@ -162,7 +161,10 @@
 
       const scopes = ["username", "payments"];
 
-      const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
+      const authResult = await Pi.authenticate(
+        scopes,
+        onIncompletePaymentFound
+      );
 
       console.log("User:", authResult.user);
 
@@ -177,6 +179,18 @@
 
   function onIncompletePaymentFound(payment) {
     console.log(payment);
+  }
+
+  function submitForm() {
+    const meter = document.getElementById("meterNumber").value;
+    const amount = document.getElementById("amount").value;
+
+    if (!meter || !amount) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    alert("Form submitted successfully");
   }
 </script>
 
