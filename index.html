@@ -106,6 +106,7 @@ async function connectWallet() {
 Pi.init({ version: "2.0" });
     alert("Pi SDK READY");
     const scopes = ["username", "payments"];
+    alert("About to authenticate");
 
     const authResult = await Pi.authenticate(
       scopes,
