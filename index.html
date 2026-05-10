@@ -72,6 +72,7 @@
   <button onclick="connectWallet()">
   Connect Pi Wallet
 </button>
+  <p id="usernameDisplay"></p>
 
   <div id="formSection">
     <input type="text" id="meterNumber" placeholder="Meter Number">
@@ -113,6 +114,8 @@ Pi.init({ version: "2.0" });
     );
 
     console.log(authResult.user);
+    document.getElementById("usernameDisplay").innerText =
+  "Logged in as: " + authResult.user.username;
 
     document.getElementById("successMessage").style.display = "block";
     document.getElementById("formSection").style.display = "block";
