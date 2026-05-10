@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 async function connectWallet() {
-  alert("JS WORKING");
+  
   try {
 
     if (!window.Pi) {
@@ -104,10 +104,9 @@ async function connectWallet() {
       return;
     }
 Pi.init({ version: "2.0" });
-    alert("Pi SDK READY");
+    
     const scopes = ["username", "payments"];
-    alert("About to authenticate");
-
+    
     const authResult = await Pi.authenticate(
       scopes,
       onIncompletePaymentFound
