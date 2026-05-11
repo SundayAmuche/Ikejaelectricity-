@@ -1,28 +1,27 @@
-export default function handler(req, res) {
+export default async function handler(req, res) {
 
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({
+      error: "Method not allowed"
+    });
   }
 
   try {
 
-    const payment = req.body?.payment;
+    const paymentId = req.body.payment.identifier;
 
-    if (!payment?.identifier) {
-      return res.status(400).json({ error: "Missing payment identifier" });
-    }
+    console.log("Completing payment:", paymentId);
 
     return res.status(200).json({
-      status: "completed",
-      paymentId: payment.identifier
+      completed: true
     });
 
   } catch (error) {
+
     console.error(error);
 
     return res.status(500).json({
-      error: "Server error",
-      message: error.message
+      error: error.message
     });
   }
 }
