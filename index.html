@@ -154,46 +154,66 @@ function submitForm() {
       return;
     }
 
-    // STEP 1: ensure user is logged in
     const scopes = ["username", "payments"];
 
-    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+    await Pi.authenticate(scopes, onIncompletePaymentFound);
 
-    if (!auth || !auth.user) {
-      alert("Please connect wallet first");
-      return;
-    }
-
-    // STEP 2: create payment
     const paymentData = {
       amount: 1,
       memo: "IkejaElectricity Token Payment",
       metadata: {
-        service: "electricity",
-        user: auth.user.username
+        service: "electricity"
       }
     };
 
     const paymentCallbacks = {
 
-      onReadyForServerApproval: function(paymentId) {
-        console.log("Approval needed:", paymentId);
-        alert("Payment created successfully");
+      onReadyForServerApproval: async function(paymentId) {
+
+        console.log("Approval:", paymentId);
+
+        await fetch("https://ikejaelectricity.vercel.app/api/approve", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            payment: {
+              identifier: paymentId
+            }
+          })
+        });
+
+        alert("Payment sent for approval");
       },
 
-      onReadyForServerCompletion: function(paymentId, txid) {
-        console.log("Completed:", paymentId, txid);
+      onReadyForServerCompletion: async function(paymentId, txid) {
+
+        console.log("Completion:", paymentId, txid);
+
+        await fetch("https://ikejaelectricity.vercel.app/api/complete", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            payment: {
+              identifier: paymentId,
+              txid: txid
+            }
+          })
+        });
+
         alert("Payment completed successfully");
       },
 
-      onCancel: function(paymentId) {
-        console.log("Cancelled:", paymentId);
+      onCancel: function() {
         alert("Payment cancelled");
       },
 
       onError: function(error) {
         console.error(error);
-        alert("Payment error occurred");
+        alert("Payment error");
       }
 
     };
@@ -201,8 +221,10 @@ function submitForm() {
     await Pi.createPayment(paymentData, paymentCallbacks);
 
   } catch (err) {
+
     console.error(err);
     alert("Payment failed");
+
   }
 }
 </script>
