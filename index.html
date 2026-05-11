@@ -109,7 +109,6 @@ async function connectWallet() {
       alert("Pi SDK not available");
       return;
     }
-Pi.init({ version: "2.0" });
     
     const scopes = ["username", "payments"];
     
@@ -145,6 +144,51 @@ function submitForm() {
   }
 
   alert("Form submitted successfully");
+}
+  async function makePayment() {
+
+  try {
+
+    if (!window.Pi) {
+      alert("Pi SDK not available");
+      return;
+    }
+
+    const paymentData = {
+      amount: 1,
+      memo: "IkejaElectricity Token Payment",
+      metadata: {
+        service: "electricity"
+      }
+    };
+
+    const paymentCallbacks = {
+
+      onReadyForServerApproval: function(paymentId) {
+        alert("Payment created successfully");
+      },
+
+      onReadyForServerCompletion: function(paymentId, txid) {
+        alert("Payment completed successfully");
+      },
+
+      onCancel: function() {
+        alert("Payment cancelled");
+      },
+
+      onError: function(error) {
+        console.error(error);
+        alert("Payment error");
+      }
+
+    };
+
+    await Pi.createPayment(paymentData, paymentCallbacks);
+
+  } catch (err) {
+    console.error(err);
+    alert("Payment failed");
+  }
 }
 </script>
 
