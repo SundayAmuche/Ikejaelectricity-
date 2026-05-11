@@ -70,6 +70,11 @@
   <p>Connect your Pi Wallet to continue</p>
 
   <button onclick="connectWallet()">
+    <br><br>
+
+<button onclick="makePayment()">
+  Pay with Pi
+</button>
   Connect Pi Wallet
 </button>
   <p id="usernameDisplay"></p>
@@ -96,6 +101,70 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 async function connectWallet() {
+  async function makePayment() {
+
+  try {
+
+    if (!window.Pi) {
+      alert("Open inside Pi Browser");
+      return;
+    }
+
+    const paymentData = {
+      amount: 1,
+      memo: "IkejaElectricity Token Payment",
+      metadata: {
+        service: "electricity"
+      }
+    };
+
+    const paymentCallbacks = {
+
+      onReadyForServerApproval: function(paymentId) {
+
+        console.log("Ready for approval", paymentId);
+
+        alert("Payment created successfully");
+      },
+
+      onReadyForServerCompletion: function(paymentId, txid) {
+
+        console.log(
+          "Ready for completion",
+          paymentId,
+          txid
+        );
+
+        alert("Payment completed successfully");
+      },
+
+      onCancel: function(paymentId) {
+
+        console.log("Payment cancelled", paymentId);
+
+        alert("Payment cancelled");
+      },
+
+      onError: function(error, payment) {
+
+        console.error(error);
+
+        alert("Payment error");
+      }
+    };
+
+    await Pi.createPayment(
+      paymentData,
+      paymentCallbacks
+    );
+
+  } catch (err) {
+
+    console.error(err);
+
+    alert("Payment failed");
+  }
+}
   
   try {
 
