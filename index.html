@@ -165,14 +165,17 @@ function submitForm() {
     const paymentCallbacks = {
 
       onReadyForServerApproval: function(paymentId) {
+        console.log("Approval needed:", paymentId);
         alert("Payment created successfully");
       },
 
       onReadyForServerCompletion: function(paymentId, txid) {
+        console.log("Completed:", paymentId, txid);
         alert("Payment completed successfully");
       },
 
-      onCancel: function() {
+      onCancel: function(paymentId) {
+        console.log("Cancelled:", paymentId);
         alert("Payment cancelled");
       },
 
