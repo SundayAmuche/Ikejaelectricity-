@@ -168,30 +168,28 @@ function submitForm() {
 
     const paymentCallbacks = {
 
-      onReadyForServerApproval: async function(paymentId) {
+      onReadyForServerApproval: function(paymentId) {
 
-        console.log("Approval:", paymentId);
+        console.log("Approval step:", paymentId);
 
-        await fetch("https://ikejaelectricity.vercel.app/api/approve", {
+        fetch("https://ikejaelectricity.vercel.app/api/approve", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            payment: {
-              identifier: paymentId
-            }
+            payment: { identifier: paymentId }
           })
-        });
+        }).catch(err => console.error(err));
 
         alert("Payment sent for approval");
       },
 
-      onReadyForServerCompletion: async function(paymentId, txid) {
+      onReadyForServerCompletion: function(paymentId, txid) {
 
-        console.log("Completion:", paymentId, txid);
+        console.log("Completion step:", paymentId, txid);
 
-        await fetch("https://ikejaelectricity.vercel.app/api/complete", {
+        fetch("https://ikejaelectricity.vercel.app/api/complete", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -202,7 +200,7 @@ function submitForm() {
               txid: txid
             }
           })
-        });
+        }).catch(err => console.error(err));
 
         alert("Payment completed successfully");
       },
@@ -221,12 +219,12 @@ function submitForm() {
     await Pi.createPayment(paymentData, paymentCallbacks);
 
   } catch (err) {
-
     console.error(err);
     alert("Payment failed");
-
   }
+
 }
+
 </script>
 
 </body>
