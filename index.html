@@ -216,7 +216,13 @@ function submitForm() {
 
     };
 
-    await Pi.createPayment(paymentData, paymentCallbacks);
+    await Pi.createPayment(
+  paymentData,
+  paymentCallbacks,
+  {
+    serverSide: true
+  }
+);
 
   } catch (err) {
     console.error(err);
