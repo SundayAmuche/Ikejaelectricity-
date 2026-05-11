@@ -9,12 +9,27 @@ export default async function handler(req, res) {
   try {
 
     const paymentId = req.body.payment.identifier;
+    const txid = req.body.payment.txid;
 
-    console.log("Completing payment:", paymentId);
+    const response = await fetch(
+      `https://api.minepi.com/v2/payments/${paymentId}/complete`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Key ${process.env.PI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          txid: txid
+        })
+      }
+    );
 
-    return res.status(200).json({
-      completed: true
-    });
+    const data = await response.json();
+
+    console.log(data);
+
+    return res.status(200).json(data);
 
   } catch (error) {
 
