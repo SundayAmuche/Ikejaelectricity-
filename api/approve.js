@@ -1,10 +1,12 @@
 export default function handler(req, res) {
 
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(200).json({ ok: true });
   }
 
-  console.log("APPROVAL RECEIVED:", req.body);
+  console.log("APPROVE HIT:", req.body);
 
-  return res.status(200).json({ ok: true });
+  return res.status(200).json({
+    status: "approved"
+  });
 }
