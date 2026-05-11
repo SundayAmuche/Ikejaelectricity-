@@ -150,15 +150,27 @@ function submitForm() {
   try {
 
     if (!window.Pi) {
-      alert("Pi SDK not available");
+      alert("Open inside Pi Browser");
       return;
     }
 
+    // STEP 1: ensure user is logged in
+    const scopes = ["username", "payments"];
+
+    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+    if (!auth || !auth.user) {
+      alert("Please connect wallet first");
+      return;
+    }
+
+    // STEP 2: create payment
     const paymentData = {
       amount: 1,
       memo: "IkejaElectricity Token Payment",
       metadata: {
-        service: "electricity"
+        service: "electricity",
+        user: auth.user.username
       }
     };
 
@@ -181,7 +193,7 @@ function submitForm() {
 
       onError: function(error) {
         console.error(error);
-        alert("Payment error");
+        alert("Payment error occurred");
       }
 
     };
