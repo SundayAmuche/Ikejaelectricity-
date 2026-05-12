@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 async function connectWallet() {
+  alert("Connect button clicked");
   
   try {
 
@@ -159,6 +160,7 @@ function onIncompletePaymentFound(payment) {
 }
 
 async function makePayment() {
+  alert("Pay button clicked");
   try {
     if (!window.Pi) {
       alert("Open inside Pi Browser");
