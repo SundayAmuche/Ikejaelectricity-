@@ -67,29 +67,33 @@
 <div class="container">
 
   <h1>WELCOME TO IKEJAELECTRICITY</h1>
-  <p>Connect your Pi Wallet to continue</p>
+<p>Connect your Pi Wallet to continue</p>
 
-  <button onclick="connectWallet()">
-    <br><br>
+<button onclick="connectWallet()">
+  Connect Pi Wallet
+</button>
+
+<br><br>
 
 <button onclick="makePayment()">
   Pay with Pi
 </button>
-  Connect Pi Wallet
-</button>
-  <p id="usernameDisplay"></p>
 
-  <div id="formSection">
-    <input type="text" id="meterNumber" placeholder="Meter Number">
-    <input type="number" id="amount" placeholder="Amount">
-    <button onclick="submitForm()">Submit</button>
-  </div>
+<p id="usernameDisplay"></p>
 
-  <div id="successMessage">Pi Wallet connected successfully!</div>
+<div id="formSection">
+  <input type="text" id="meterNumber" placeholder="Meter Number">
+  <input type="number" id="amount" placeholder="Amount">
+  <button onclick="submitForm()">Submit</button>
+</div>
 
-  <a href="/validation-key.txt" target="_blank" style="color:#00c3ff; display:block; margin-top:20px;">
-    View Validation Key
-  </a>
+<div id="successMessage">
+  Pi Wallet connected successfully!
+</div>
+
+<a href="/validation-key.txt" target="_blank" style="color:#00c3ff; display:block; margin-top:20px;">
+  View Validation Key
+</a>
 
 </div>
 
