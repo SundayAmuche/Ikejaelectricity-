@@ -125,9 +125,12 @@ async function connectWallet() {
 
     document.getElementById("usernameDisplay").innerText =
       "Logged in as: " + authResult.user.username;
+console.log("AUTH RESULT:", authResult);
 
-    document.getElementById("successMessage").style.display = "block";
-    document.getElementById("formSection").style.display = "block";
+if (!authResult || !authResult.user) {
+  alert("Authentication failed - no user returned");
+  return;
+}
 
   } catch (error) {
     console.error(error);
