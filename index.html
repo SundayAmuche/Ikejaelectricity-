@@ -9,194 +9,107 @@
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
   <style>
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      background:#0c1b2a;
-      color:white;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-      text-align:center;
-      padding:20px;
-    }
-
-    .container{
-      width:100%;
-      max-width:400px;
-    }
-
-    button{
-      width:100%;
-      padding:14px;
-      margin-top:10px;
-      border:none;
-      border-radius:10px;
-      background:#2d8cff;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-    input{
-      width:100%;
-      padding:10px;
-      margin-top:10px;
-      border:none;
-      border-radius:6px;
-    }
-
-    #formSection{
-      display:none;
-      margin-top:15px;
-    }
-
-    #successMessage{
-      display:none;
-      margin-top:15px;
-      background:green;
-      padding:10px;
-      border-radius:8px;
-    }
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+    #username { margin-top: 20px; font-weight: bold; }
   </style>
 </head>
-
 <body>
 
-<div class="container">
+  <h1>WELCOME TO IKEJAELECTRICITY</h1>
+  <p>Connect your Pi Wallet to continue</p>
 
-<h1>WELCOME TO IKEJAELECTRICITY</h1>
-<p>Connect your Pi Wallet to continue</p>
+  <!-- Buttons -->
+  <button onclick="connectWallet()">Connect Pi Wallet</button>
+  <button onclick="makePayment()">Pay with Pi</button>
 
-<button onclick="connectWallet()">
-  Connect Pi Wallet
-</button>
+  <p id="username"></p>
 
-<br><br>
+  <p><a href="https://ikejaelectricity.vercel.app/validation-key.txt" target="_blank">View Validation Key</a></p>
 
-<button onclick="makePayment()">
-  Pay with Pi
-</button>
+  <!-- Scripts -->
+  <script>
+    // Initialize Pi SDK
+    Pi.init({
+      version: "2.0",
+      sandbox: true
+    });
+    console.log("Pi SDK Loaded");
 
-<p id="usernameDisplay"></p
+    let currentUser = null;
 
-<div id="formSection">
-  <input type="text" id="meterNumber" placeholder="Meter Number">
-  <input type="number" id="amount" placeholder="Amount">
-  <button onclick="submitForm()">Submit</button>
-</div>
+    // CONNECT WALLET
+    async function connectWallet() {
+      alert("Connect button clicked");
+      try {
+        if (!window.Pi) {
+          alert("Please open inside Pi Browser");
+          return;
+        }
 
-<div id="successMessage">
-  Pi Wallet connected successfully!
-</div>
+        const scopes = ['username', 'payments'];
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        currentUser = auth.user;
 
-<a href="/validation-key.txt" target="_blank" style="color:#00c3ff; display:block; margin-top:20px;">
-  View Validation Key
-</a>
+        document.getElementById("username").innerText =
+          "Logged in as: " + currentUser.username;
 
-</div>
+        alert("Pi Wallet connected successfully!");
+        console.log(auth);
 
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-
-  // Initialize Pi SDK
-  Pi.init({
-    version: "2.0",
-    sandbox: true
-  });
-
-  console.log("Pi SDK Loaded");
-
-});
-
-let currentUser = null;
-
-// CONNECT WALLET
-async function connectWallet() {
-
-  alert("Connect button clicked");
-
-  try {
-
-    if (!window.Pi) {
-      alert("Please open inside Pi Browser");
-      return;
+      } catch (error) {
+        console.error(error);
+        alert("Login failed");
+      }
     }
 
-    const scopes = ['username', 'payments'];
+    // HANDLE INCOMPLETE PAYMENTS
+    function onIncompletePaymentFound(payment) {
+      console.log("Incomplete payment found", payment);
+    }
 
-    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+    // PAYMENT FUNCTION
+    async function makePayment() {
+      alert("Pay button clicked");
+      try {
+        const paymentData = {
+          amount: 1,
+          memo: "Electricity Payment",
+          metadata: { service: "IkejaElectricity" }
+        };
 
-    currentUser = auth.user;
+        const payment = await Pi.createPayment(
+          paymentData,
+          {
+            onReadyForServerApproval: function(paymentId) {
+              alert("Payment sent for Approval");
+              console.log(paymentId);
+            },
 
-    document.getElementById("username").innerText =
-      "Logged in as: " + currentUser.username;
+            onReadyForServerCompletion: function(paymentId, txid) {
+              alert("Payment completed");
+              console.log(paymentId, txid);
+            },
 
-    alert("Pi Wallet connected successfully!");
+            onCancel: function(paymentId) {
+              alert("Payment cancelled");
+            },
 
-    console.log(auth);
+            onError: function(error, payment) {
+              console.error(error);
+              alert("Payment failed");
+            }
+          }
+        );
 
-  } catch (error) {
+        console.log(payment);
 
-    console.error(error);
-
-    alert("Login failed");
-
-  }
-}
-
-// HANDLE INCOMPLETE PAYMENTS
-function onIncompletePaymentFound(payment) {
-  console.log("Incomplete payment found", payment);
-}
-
-// PAYMENT FUNCTION
-async function makePayment() {
-
-  alert("Pay button clicked");
-
-  try {
-
-    const paymentData = {
-      amount: 1,
-      memo: "Electricity Payment",
-      metadata: { service: "IkejaElectricity" }
-    };
-
-    const payment = await Pi.createPayment(
-      paymentData,
-      {
-        onReadyForServerApproval: function(paymentId) {
-          alert("Payment sent for Approval");
-          console.log(paymentId);
-        },
-
-        onReadyForServerCompletion: function(paymentId, txid) {
-          alert("Payment completed");
-          console.log(paymentId, txid);
-        },
-
-        onCancel: function(paymentId) {
-          alert("Payment cancelled");
-        },
-
-        onError: function(error, payment) {
-          console.error(error);
-          alert("Payment failed");
-        }
+      } catch (error) {
+        console.error(error);
+        alert("Payment error");
       }
-    );
+    }
+  </script>
 
-    console.log(payment);
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert("Payment error");
-
-  }
-}
-</script>
 </body>
 </html>
