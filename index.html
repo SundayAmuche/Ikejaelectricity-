@@ -122,6 +122,7 @@ async function connectWallet() {
     const scopes = ["username", "payments"];
 
     const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
+    setUIState("loggedIn", authResult.user.username);
 
     document.getElementById("usernameDisplay").innerText =
       "Logged in as: " + authResult.user.username;
