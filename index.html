@@ -9,9 +9,63 @@
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-    button { padding: 10px 20px; margin: 10px; font-size: 16px; }
-    #username { margin-top: 20px; font-weight: bold; }
+    /* Full page gradient background */
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298); /* blue gradient */
+      color: white;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(90deg, #ff7e5f, #feb47b); /* orange gradient */
+      color: white;
+      transition: transform 0.1s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #username {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 20px;
+      color: #fdf6e3;
+    }
+
+    a {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -27,7 +81,6 @@
 
   <p><a href="https://ikejaelectricity.vercel.app/validation-key.txt" target="_blank">View Validation Key</a></p>
 
-  <!-- Scripts -->
   <script>
     // Initialize Pi SDK
     Pi.init({
@@ -68,7 +121,7 @@
       console.log("Incomplete payment found", payment);
     }
 
-    // PAYMENT FUNCTION
+    // PAYMENT FUNCTION - Auto-approved in sandbox
     async function makePayment() {
       alert("Pay button clicked");
       try {
@@ -82,13 +135,17 @@
           paymentData,
           {
             onReadyForServerApproval: function(paymentId) {
-              alert("Payment sent for Approval");
-              console.log(paymentId);
+              // Auto-approve immediately for sandbox
+              alert("Payment sent for Approval - auto-approved in sandbox");
+              console.log("Payment ID:", paymentId);
+
+              // Simulate server approval immediately
+              this.onReadyForServerCompletion(paymentId, "SANDBOX_TXID_12345");
             },
 
             onReadyForServerCompletion: function(paymentId, txid) {
-              alert("Payment completed");
-              console.log(paymentId, txid);
+              alert("Payment completed (sandbox)");
+              console.log("Payment ID:", paymentId, "TXID:", txid);
             },
 
             onCancel: function(paymentId) {
