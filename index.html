@@ -97,123 +97,107 @@
 
 </div>
 
-  <script>
-document.addEventListener("DOMContentLoaded", function () {
-  if (window.Pi) {
-    Pi.init({ version: "2.0", sandbox: true });
-    console.log("Pi SDK loaded");
-  }
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
-  setUIState("guest");
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // Initialize Pi SDK
+  Pi.init({
+    version: "2.0",
+    sandbox: true
+  });
+
+  console.log("Pi SDK Loaded");
+
 });
 
-function setUIState(state, username = "") {
-  const connectBtn = document.getElementById("connectBtn");
-  const formSection = document.getElementById("formSection");
-  const usernameDisplay = document.getElementById("usernameDisplay");
+let currentUser = null;
 
-  if (state === "guest") {
-    connectBtn.style.display = "block";
-    formSection.style.display = "none";
-    usernameDisplay.innerText = "";
-  }
-
-  if (state === "loggedIn") {
-    connectBtn.style.display = "none";
-    formSection.style.display = "block";
-    usernameDisplay.innerText = "Logged in as: " + username;
-  }
-}
-
-function onIncompletePaymentFound(payment) {
-  console.log("Incomplete payment:", payment);
-}
-
-/* ---------------- LOGIN ---------------- */
+// CONNECT WALLET
 async function connectWallet() {
+
   alert("Connect button clicked");
 
   try {
+
     if (!window.Pi) {
-      alert("Pi SDK not available");
+      alert("Please open inside Pi Browser");
       return;
     }
 
-    const scopes = ["username", "payments"];
+    const scopes = ['username', 'payments'];
 
-    const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
+    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
 
-    if (!authResult || !authResult.user) {
-      alert("Authentication failed");
-      return;
-    }
+    currentUser = auth.user;
 
-    console.log("AUTH RESULT:", authResult);
+    document.getElementById("username").innerText =
+      "Logged in as: " + currentUser.username;
 
-    setUIState("loggedIn", authResult.user.username);
+    alert("Pi Wallet connected successfully!");
+
+    console.log(auth);
 
   } catch (error) {
+
     console.error(error);
-    alert("Connection failed");
+
+    alert("Login failed");
+
   }
 }
 
-/* ---------------- PAYMENT ---------------- */
+// HANDLE INCOMPLETE PAYMENTS
+function onIncompletePaymentFound(payment) {
+  console.log("Incomplete payment found", payment);
+}
+
+// PAYMENT FUNCTION
 async function makePayment() {
+
   alert("Pay button clicked");
 
   try {
-    if (!window.Pi) {
-      alert("Open inside Pi Browser");
-      return;
-    }
 
     const paymentData = {
       amount: 1,
-      memo: "IkejaElectricity Payment",
-      metadata: { service: "electricity" }
+      memo: "Electricity Payment",
+      metadata: { service: "IkejaElectricity" }
     };
 
-    const callbacks = {
-      onReadyForServerApproval: function(paymentId) {
-        console.log("Approval:", paymentId);
+    const payment = await Pi.createPayment(
+      paymentData,
+      {
+        onReadyForServerApproval: function(paymentId) {
+          alert("Payment sent for Approval");
+          console.log(paymentId);
+        },
 
-        fetch("/api/approve", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ paymentId })
-        });
+        onReadyForServerCompletion: function(paymentId, txid) {
+          alert("Payment completed");
+          console.log(paymentId, txid);
+        },
 
-        alert("Payment sent for approval");
-      },
+        onCancel: function(paymentId) {
+          alert("Payment cancelled");
+        },
 
-      onReadyForServerCompletion: function(paymentId, txid) {
-        console.log("Completion:", paymentId, txid);
-
-        fetch("/api/complete", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ paymentId, txid })
-        });
-
-        alert("Payment completed");
-      },
-
-      onCancel: function() {
-        alert("Payment cancelled");
-      },
-
-      onError: function(err) {
-        console.error(err);
-        alert("Payment error");
+        onError: function(error, payment) {
+          console.error(error);
+          alert("Payment failed");
+        }
       }
-    };
+    );
 
-    await Pi.createPayment(paymentData, callbacks, { serverSide: true });
+    console.log(payment);
 
-  } catch (err) {
-    console.error(err);
-    alert("Payment failed");
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Payment error");
+
   }
 }
 </script>
