@@ -97,22 +97,41 @@
 
 </div>
 
-<script>
+  <script>
 document.addEventListener("DOMContentLoaded", function () {
   if (window.Pi) {
     Pi.init({ version: "2.0", sandbox: true });
     console.log("Pi SDK loaded");
   }
+
+  setUIState("guest");
 });
 
-function onIncompletePaymentFound(payment) {
-  console.log("Incomplete payment found:", payment);
+function setUIState(state, username = "") {
+  const connectBtn = document.getElementById("connectBtn");
+  const formSection = document.getElementById("formSection");
+  const usernameDisplay = document.getElementById("usernameDisplay");
+
+  if (state === "guest") {
+    connectBtn.style.display = "block";
+    formSection.style.display = "none";
+    usernameDisplay.innerText = "";
+  }
+
+  if (state === "loggedIn") {
+    connectBtn.style.display = "none";
+    formSection.style.display = "block";
+    usernameDisplay.innerText = "Logged in as: " + username;
+  }
 }
 
-// CONNECT WALLET
+function onIncompletePaymentFound(payment) {
+  console.log("Incomplete payment:", payment);
+}
+
+/* ---------------- LOGIN ---------------- */
 async function connectWallet() {
   alert("Connect button clicked");
-  console.log("PI OBJECT:", window.Pi);
 
   try {
     if (!window.Pi) {
@@ -123,16 +142,15 @@ async function connectWallet() {
     const scopes = ["username", "payments"];
 
     const authResult = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+    if (!authResult || !authResult.user) {
+      alert("Authentication failed");
+      return;
+    }
+
+    console.log("AUTH RESULT:", authResult);
+
     setUIState("loggedIn", authResult.user.username);
-
-    document.getElementById("usernameDisplay").innerText =
-      "Logged in as: " + authResult.user.username;
-console.log("AUTH RESULT:", authResult);
-
-if (!authResult || !authResult.user) {
-  alert("Authentication failed - no user returned");
-  return;
-}
 
   } catch (error) {
     console.error(error);
@@ -140,20 +158,7 @@ if (!authResult || !authResult.user) {
   }
 }
 
-// SUBMIT FORM
-function submitForm() {
-  const meter = document.getElementById("meterNumber").value;
-  const amount = document.getElementById("amount").value;
-
-  if (!meter || !amount) {
-    alert("Please fill all fields");
-    return;
-  }
-
-  alert("Form submitted successfully");
-}
-
-// PAYMENT
+/* ---------------- PAYMENT ---------------- */
 async function makePayment() {
   alert("Pay button clicked");
 
@@ -163,48 +168,48 @@ async function makePayment() {
       return;
     }
 
-    const scopes = ["username", "payments"];
-
-    await Pi.authenticate(scopes, onIncompletePaymentFound);
-
     const paymentData = {
       amount: 1,
-      memo: "IkejaElectricity Token Payment",
+      memo: "IkejaElectricity Payment",
       metadata: { service: "electricity" }
     };
 
-    const paymentCallbacks = {
+    const callbacks = {
       onReadyForServerApproval: function(paymentId) {
-        fetch("https://ikejaelectricity.vercel.app/api/approve", {
+        console.log("Approval:", paymentId);
+
+        fetch("/api/approve", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ payment: { identifier: paymentId } })
+          body: JSON.stringify({ paymentId })
         });
+
         alert("Payment sent for approval");
       },
 
       onReadyForServerCompletion: function(paymentId, txid) {
-        fetch("https://ikejaelectricity.vercel.app/api/complete", {
+        console.log("Completion:", paymentId, txid);
+
+        fetch("/api/complete", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ payment: { identifier: paymentId, txid } })
+          body: JSON.stringify({ paymentId, txid })
         });
-        alert("Payment completed successfully");
+
+        alert("Payment completed");
       },
 
       onCancel: function() {
         alert("Payment cancelled");
       },
 
-      onError: function(error) {
-        console.error(error);
+      onError: function(err) {
+        console.error(err);
         alert("Payment error");
       }
     };
 
-    await Pi.createPayment(paymentData, paymentCallbacks, {
-      serverSide: true
-    });
+    await Pi.createPayment(paymentData, callbacks, { serverSide: true });
 
   } catch (err) {
     console.error(err);
