@@ -1,58 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IkejaElectricity</title>
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<style>
-  body { font-family: sans-serif; text-align: center; padding: 50px; }
-  button { padding: 15px 30px; margin: 10px; font-size: 18px; cursor: pointer; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IkejaElectricity</title>
+
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+  <style>
+    /* Full page gradient background */
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(90deg, #5b2be0, #00c6ff);
+      color: white;
+      transition: transform 0.1s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #username {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 20px;
+      color: #fdf6e3;
+    }
+
+    a {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-<h1>WELCOME TO IKEJAELECTRICITY</h1>
-<p>Connect your Pi Wallet to continue</p>
 
-<button id="connectBtn">Connect Pi Wallet</button>
-<button id="payBtn">Pay with Pi</button>
+  <h1>WELCOME TO IKEJAELECTRICITY</h1>
+  <p>Connect your Pi Wallet to continue</p>
 
-<p><a href="https://ikejaelectricity.vercel.app/validation-key.txt" target="_blank">View Validation Key</a></p>
+  <!-- Buttons -->
+  <button onclick="connectWallet()">Connect Pi Wallet</button>
+  <button onclick="makePayment()">Pay with Pi</button>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  if (!window.Pi) {
-    alert("Please open this in the Pi Browser!");
-    return;
-  }
+  <p id="username"></p>
 
-  const connectBtn = document.getElementById("connectBtn");
-  const payBtn = document.getElementById("payBtn");
+  <p>
+    <a href="https://ikejaelectricity.vercel.app/validation-key.txt" target="_blank">
+      View Validation Key
+    </a>
+  </p>
 
-  connectBtn.addEventListener("click", async () => {
-    try {
-      const scopes = ["username", "payments"];
-      const result = await Pi.authenticate(scopes);
-      alert("Connected as: " + result.username);
-    } catch (err) {
-      console.error(err);
-      alert("Wallet connection failed");
+  <script>
+    // Initialize Pi SDK
+    Pi.init({
+      version: "2.0",
+      sandbox: true
+    });
+
+    console.log("Pi SDK Loaded");
+
+    let currentUser = null;
+
+    // CONNECT WALLET
+    async function connectWallet() {
+      alert("Connect button clicked");
+
+      try {
+        if (!window.Pi) {
+          alert("Please open inside Pi Browser");
+          return;
+        }
+
+        const scopes = ['username', 'payments'];
+
+        const auth = await Pi.authenticate(
+          scopes,
+          onIncompletePaymentFound
+        );
+
+        currentUser = auth.user;
+
+        document.getElementById("username").innerText =
+          "Logged in as: " + currentUser.username;
+
+        alert("Pi Wallet connected successfully!");
+
+        console.log(auth);
+
+      } catch (error) {
+        console.error(error);
+        alert("Login failed");
+      }
     }
-  });
 
-  payBtn.addEventListener("click", async () => {
-    try {
-      const paymentResult = await Pi.requestPayment({
-        amount: "1",
-        memo: "Test Payment"
-      });
-      alert("Payment status: " + paymentResult.status);
-    } catch (err) {
-      console.error(err);
-      alert("Payment failed");
+    // HANDLE INCOMPLETE PAYMENTS
+    function onIncompletePaymentFound(payment) {
+      console.log("Incomplete payment found", payment);
     }
-  });
-});
-</script>
+
+    // PAYMENT FUNCTION
+    async function makePayment() {
+      alert("Pay button clicked");
+
+      try {
+        const paymentData = {
+          amount: 1,
+          memo: "Electricity Payment",
+          metadata: {
+            service: "IkejaElectricity"
+          }
+        };
+
+        const payment = await Pi.createPayment(
+          paymentData,
+          {
+            onReadyForServerApproval: function(paymentId) {
+
+              alert("Payment sent for approval");
+
+              console.log("Payment ID:", paymentId);
+
+              // Sandbox auto-completion
+              this.onReadyForServerCompletion(
+                paymentId,
+                "SANDBOX_TXID_12345"
+              );
+            },
+
+            onReadyForServerCompletion: function(paymentId, txid) {
+
+              alert("Payment completed successfully");
+
+              console.log(
+                "Payment ID:",
+                paymentId,
+                "TXID:",
+                txid
+              );
+            },
+
+            onCancel: function(paymentId) {
+              alert("Payment cancelled");
+            },
+
+            onError: function(error, payment) {
+              console.error(error);
+              alert("Payment failed");
+            }
+          }
+        );
+
+        console.log(payment);
+
+      } catch (error) {
+        console.error(error);
+        alert("Payment error");
+      }
+    }
+  </script>
+
 </body>
 </html>
